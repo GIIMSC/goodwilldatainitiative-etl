@@ -1,0 +1,2264 @@
+{
+  "fields": [
+    {
+      "name": "MilestoneFlag",
+      "title": "Milestone Flag",
+      "type": "string",
+      "constraints": {
+        "required": true,
+        "enum": [
+          "Intake",
+          "Midpoint",
+          "Exit",
+          "ThirtyDays",
+          "SixtyDays",
+          "NinetyDays",
+          "SixMonths",
+          "OneYear",
+          "TwoYears",
+          "ThreeYears",
+          "FourYears",
+          "FiveYears",
+          "Update"
+        ]
+      }
+    },
+    {
+      "name": "ToDelete",
+      "title": "Delete Record",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    {
+      "name": "ForceOverWrite",
+      "title": "Force Overwrite Record",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    {
+      "name": "CaseNumber",
+      "title": "Case Number",
+      "type": "string",
+      "constraints": {
+        "required": true
+      }
+    },
+    {
+      "name": "MemberOrganization",
+      "title": "Member Organization",
+      "type": "string",
+      "constraints": {
+        "required": true
+      }
+    },
+    {
+      "name": "ProgramID",
+      "title": "Program ID",
+      "type": "string"
+    },
+    {
+      "name": "ProgramName",
+      "title": "Program Name",
+      "type": "string"
+    },
+    {
+      "name": "DateOfBirth",
+      "title": "Date of Birth",
+      "type": "date",
+      "format": "any",
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "DateOfBirth"
+      }
+    },
+    {
+      "name": "Zipcode",
+      "title": "Zip Code",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 99999
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "Zipcode"
+      }
+    },
+    {
+      "name": "County",
+      "title": "County",
+      "type": "string",
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "County"
+      }
+    },
+    {
+      "name": "State",
+      "title": "State",
+      "type": "string",
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "State"
+      }
+    },
+    {
+      "name": "Gender",
+      "title": "Gender",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Female": 1,
+        "Male": 2,
+        "Transgender": 3,
+        "Other": 4
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "Gender"
+      }
+    },
+    {
+      "name": "Race",
+      "title": "Race",
+      "type": "integer",
+      "allows_multiple": true,
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Caucasian or White": 1,
+        "Black or African American": 2,
+        "American Indian/Alaska Native": 3,
+        "Asian/Native Hawaiian/Other Pacific Islander": 4,
+        "Other race or origin": 5
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "Race"
+      }
+    },
+    {
+      "name": "Ethnicity",
+      "title": "Ethnicity",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 2
+      },
+      "enum_mapping": {
+        "Hispanic/Latino ethnic origin": 1,
+        "Not Hispanic/Latino": 2
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "Ethnicity"
+      }
+    },
+    {
+      "name": "DisabilityCategories",
+      "title": "Disability Categories",
+      "type": "integer",
+      "allows_multiple": true,
+      "constraints": {
+        "minimum": 1,
+        "maximum": 10
+      },
+      "enum_mapping": {
+        "Blindness or Other Visual Impairment": 1,
+        "Deafness or Hard of Hearing": 2,
+        "Other Physical Disability": 3,
+        "Neurological Disability": 4,
+        "Learning Disability other than Autism": 5,
+        "Developmental Disability other than Autism": 6,
+        "Autism": 7,
+        "Psychiatric Disability": 8,
+        "Emotional Disability": 9,
+        "Other disabling condition": 10
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "DisabilityCategories"
+      }
+    },
+    {
+      "name": "CategoriesIdentifyWith",
+      "title": "Categories Participants Identify With",
+      "type": "integer",
+      "allows_multiple": true,
+      "constraints": {
+        "minimum": 1,
+        "maximum": 8
+      },
+      "enum_mapping": {
+        "History of Substance Abuse": 1,
+        "Dislocated Worker": 2,
+        "Non-English Speaker/English as a Second Language": 3,
+        "Lack of Literacy": 4,
+        "Immigrant": 5,
+        "Refugee": 6,
+        "LGBTQ": 7,
+        "Single Parent": 8
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "CategoriesIdentifyWith"
+      }
+    },
+    {
+      "name": "VeteranAndFamilyStatusId",
+      "title": "Veteran and Military Family Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 3
+      },
+      "enum_mapping": {
+        "Veteran/History of Military Service": 1,
+        "Member of military family (immediate family member in the military or a veteran)": 2,
+        "Not a veteran or member of military family": 3
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "VeteranAndFamilyStatusId"
+      }
+    },
+    {
+      "name": "VeteranStatusId",
+      "title": "Veteran Status Categories",
+      "type": "integer",
+      "allows_multiple": true,
+      "constraints": {
+        "minimum": 1,
+        "maximum": 2
+      },
+      "enum_mapping": {
+        "Post 9/11 veteran": 1,
+        "Veteran with Service-Connected Disabilities": 2
+      },
+      "milestones": [
+        0
+      ],
+      "custom_milestone_field_names": {
+        "0": "VeteranStatusId"
+      }
+    },
+    {
+      "name": "Date",
+      "title": "Date",
+      "type": "date",
+      "format": "any",
+      "milestones": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Retention",
+      "title": "Retention",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Promotion",
+      "title": "Career Advancement: Promotion",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HighestLevelOfEducation",
+      "title": "Highest Level of Education",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 9
+      },
+      "enum_mapping": {
+        "No formal schooling completed": 1,
+        "Completed 8th grade": 2,
+        "Less than high school diploma": 3,
+        "High school diploma": 4,
+        "GED/high school equivalency": 5,
+        "Postsecondary non-degree award": 6,
+        "Associate's degree": 7,
+        "Bachelor degree": 8,
+        "Graduate degree": 9
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "CurrentEducationalEnrollment",
+      "title": "Current Educational Enrollment Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 7
+      },
+      "enum_mapping": {
+        "High school diploma": 1,
+        "GED/high school equivalency": 2,
+        "Postsecondary non-degree award": 3,
+        "Associate's degree": 4,
+        "Bachelor degree": 5,
+        "Graduate degree": 6,
+        "Not applicable": 7
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HasRecognizedCredentials",
+      "title": "Has Certifications/Credentials",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "StackableCredentials",
+      "title": "Stackable Credentials",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 9
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HasOtherTraining",
+      "title": "Has Non-Credentialed Training",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "JobDate",
+      "title": "Last Date of Employment",
+      "type": "date",
+      "format": "any",
+      "milestones": [
+        0,
+        2
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobLastDayOfWork",
+        "2": "ExitJobPlacementStartDate"
+      }
+    },
+    {
+      "name": "SOC",
+      "title": "Occupation Code",
+      "type": "string",
+      "constraints": {
+        "pattern": "\\d\\d-\\d\\d\\d\\d"
+      },
+      "milestones": [
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "2": "ExitJobPlacementSOC"
+      }
+    },
+    {
+      "name": "HourlyWage",
+      "title": "Hourly Wage",
+      "type": "number",
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobHourlyWage",
+        "2": "ExitJobPlacementJobHourlyWage"
+      }
+    },
+    {
+      "name": "HoursPerWeek",
+      "title": "Average Hours per Week",
+      "type": "number",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 99
+      },
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobHoursPerWeek",
+        "2": "ExitJobPlacementJobHoursPerWeek"
+      }
+    },
+    {
+      "name": "HealthInsurance",
+      "title": "Eligibility for Employer-Sponsored Health Insurance",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobHealthInsurance",
+        "2": "ExitJobPlacementJobHealthInsurance"
+      }
+    },
+    {
+      "name": "PaidTimeOff",
+      "title": "Eligibility for Paid Time off",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobPaidTimeOff",
+        "2": "ExitJobPlacementJobPaidTimeOff"
+      }
+    },
+    {
+      "name": "Retirement",
+      "title": "Eligibility for Employer-Sponsored Retirement",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 3
+      },
+      "enum_mapping": {
+        "Yes": 1,
+        "y": 1,
+        "true": 1,
+        "t": 1,
+        "No": 2,
+        "n": 2,
+        "false": 2,
+        "f": 2,
+        "Don't know": 3
+      },
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "custom_milestone_field_names": {
+        "0": "IntakeCurrentMostRecentJobRetirement",
+        "2": "ExitJobPlacementJobRetirement",
+        "5": "NinetyDaysRetirementSavings",
+        "6": "SixMonthsRetirementSavings",
+        "7": "OneYearRetirementSavings",
+        "8": "TwoYearsRetirementSavings",
+        "9": "ThreeYearsRetirementSavings",
+        "10": "FourYearsRetirementSavings",
+        "11": "FiveYearsRetirementSavings",
+        "12": "UpdateRetirementSavings"
+      }
+    },
+    {
+      "name": "CurrentNumberOfJobs",
+      "title": "Current Number of Jobs",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 10
+      },
+      "milestones": [
+        0,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "JobStatus",
+      "title": "Job Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Temporary, part-time": 1,
+        "Temporary, full-time": 2,
+        "Permanent, part-time": 3,
+        "Permanent, full-time": 4
+      },
+      "milestones": [
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore",
+      "title": "Work Readiness Score",
+      "type": "integer",
+      "constraints": {
+        "minimum": 10,
+        "maximum": 40
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore1",
+      "title": "Work Readiness: Attendance",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Excessive absences consistently impact work performance. Additional training is needed.": 1,
+        "Below 90% attendance, but participant seeks out opportunities to make up missed work.": 2,
+        "Maintains 90% attendance and notifies supervisor ahead of time prior to absence.": 3,
+        "100% attendance or missed one day with valid reason that did not occur during first two weeks.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore2",
+      "title": "Work Readiness: Punctuality",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Excessive lateness consistently impacts work performance. Additional training is needed.": 1,
+        "Inconsistent in arriving to work, returning from breaks on time, and calling supervisor prior to lateness.": 2,
+        "Arrives to work & returns from breaks on time with rare exception. If late, calls supervisor ahead of time.": 3,
+        "Perfect or near perfect in arriving for work and returning from breaks on time. Model for other workers.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore3",
+      "title": "Work Readiness: Workplace Appearance",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Has not yet demonstrated appearance and/or personal hygiene for position and duties.": 1,
+        "Inconsistent in demonstrating appropriate appearance and/or personal hygiene for workplace.": 2,
+        "Dresses appropriately and practices hygiene for position and duties with rare exception.": 3,
+        "Consistent display of professional appearance and hygiene serves as a model for other workers.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore4",
+      "title": "Work Readiness: Taking Initiative",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Reluctant to begin tasks without significant staff intervention. Needs frequent reminders. Additional training may be needed.": 1,
+        "Inconsistently begins or remains on task. Needs occasional prompting. Often satisfied with bare minimum performance.": 2,
+        "Begins and remains on task until completion with rare exception. Can work independently. Initiates interaction for next task.": 3,
+        "Consistently begins/remains on task until completion, and initiates interaction for next task. Can work independently, and leads others.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore5",
+      "title": "Work Readiness: Quality of Work",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Has not yet given best effort. Rarely evaluates work and utilizes feedback. Completes work inconsistently. Additional training may be needed.": 1,
+        "Uneven work quality. Sometimes evaluates own work and utilizes feedback, but inconsistent in meeting quality standards.": 2,
+        "Quality of work meets expectations. Evaluates own work, and utilizes employer feedback to improve performance.": 3,
+        "Quality of work often exceeds expectations. Consistently gives best effort. Evaluates own work and utilizes employer feedback.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore6",
+      "title": "Work Readiness: Communication Skills",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Seldom speaks clearly or listens attentively. Repeatedly uses inappropriate language for the workplace. May need additional training and support.": 1,
+        "Inconsistent in communicating in manner and language appropriate for workplace. Inconsistent in effort to speak clearly or listen attentively.": 2,
+        "Accepts direction and constructive criticism with positive attitude with rare exception. Uses feedback to improve work performance.": 3,
+        "Consistently demonstrates positive oral/non- verbal communication skills. Speaks clearly and listens attentively. Can effectively present to a group if needed.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore7",
+      "title": "Work Readiness: Response to Supervision",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Reluctant to accept feedback and constructive criticism from supervisor. Responds with poor verbal or nonverbal communication. Additional training may be necessary.": 1,
+        "Inconsistent in accepting direction, feedback, and constructive criticism from supervisor. Shows potential for improvement.": 2,
+        "Accepts direction and constructive criticism with positive attitude with rare exception. Uses feedback to improve work performance.": 3,
+        "Consistently accepts direction and constructive criticism with positive attitude. Uses feedback to improve work performance, and provides new and useful ideas to employer.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore8",
+      "title": "Work Readiness: Teamwork",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Has not yet demonstrated appropriate group behaviors. Improvement needed in treating others with respect. Rarely contributes to group efforts. Additional training may be necessary.": 1,
+        "Inconsistent in promoting positive group behaviors amongst coworkers, and in contributing to group efforts. Shows potential for improvement.": 2,
+        "Works well with co-workers, is respectful, and contributes to group efforts with rare exception. Respects diversity within the workplace.": 3,
+        "Consistently facilitates positive group dynamics. Demonstrates leadership that plays a significant role in success of group efforts. Promotes larger group unity.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore9",
+      "title": "Work Readiness: Problem Solving/Critical Thinking",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Makes little or no effort to use knowledge learned from the job to solve workplace problems.": 1,
+        "Inconsistent in using sound reasoning to solve work problems. Shows potential for improvement.": 2,
+        "Uses sound reasoning, and job knowledge to solve workplace problems. Shows initiative in improving skills.": 3,
+        "Consistently applies sound reasoning to solve work problems. Identifies potential problems before they can occur.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "WorkReadinessScore10",
+      "title": "Work Readiness: Workplace Culture - Policy and Safety",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Has not demonstrated understanding of workplace policies/ethics. Has not completed applicable training on workplace.": 1,
+        "Inconsistent in demonstrating understanding of workplace culture, policies, and safety rules.": 2,
+        "Demonstrates understanding of workplace policies. Completed safety training if applicable, and adheres to rules. Exhibits honesty and integrity.": 3,
+        "Shows clear understanding of work policies and safety rules. Exhibits honesty and integrity. Has completed applicable safety trainings and has led coworkers.": 4
+      },
+      "milestones": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "TrainingRelatedPlacement",
+      "title": "Training Related Placement",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HasSavings",
+      "title": "Has Savings",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "OneMonthExpenses",
+      "title": "Has Expenses for One Month",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HouseholdAdults",
+      "title": "Number of Adults in Household",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 99
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HouseholdChildren",
+      "title": "Number of Children in Household",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 99
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HouseholdIncome",
+      "title": "Household Income",
+      "type": "number",
+      "groupChar": ",",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 200000
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "LivingWage",
+      "title": "Ratio of Current Housing Wage/County Living Wage",
+      "type": "number",
+      "constraints": {
+        "minimum": 7.25,
+        "maximum": 99.99
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "IncomeSupports",
+      "title": "Income Supports",
+      "type": "integer",
+      "allows_multiple": true,
+      "constraints": {
+        "minimum": 1,
+        "maximum": 11
+      },
+      "enum_mapping": {
+        "Child care subsidy": 1,
+        "Earned Income Tax Credit": 2,
+        "Free or reduced price lunch": 3,
+        "Head Start": 4,
+        "LIHEAP (utility bill assistance)": 5,
+        "Medicaid": 6,
+        "Rental housing assistance/subsidy (Section 8)": 7,
+        "SNAP (food assistance)": 8,
+        "TANF (cash assistance)": 9,
+        "Unemployment": 10,
+        "WIC": 11
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore",
+      "title": "Financial Capability Score",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 7
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore1",
+      "title": "Financial Capability Score: Follows Budget",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      },
+      "enum_mapping": {
+        "No": 0,
+        "Yes": 1
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore2",
+      "title": "Financial Capability Score: Confidence in Achieving Financial Goal",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 2
+      },
+      "enum_mapping": {
+        "Not at all confident": 0,
+        "Somewhat confident": 1,
+        "Very confident": 2
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore3",
+      "title": "Financial Capability Score: Has Funds to Cover 3 Months of Expenses",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      },
+      "enum_mapping": {
+        "No": 0,
+        "Yes": 1
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore4",
+      "title": "Financial Capability Score: Has Automatic Deposit",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      },
+      "enum_mapping": {
+        "No": 0,
+        "Yes": 1
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore5",
+      "title": "Financial Capability Score: Spending was less than Income",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      },
+      "enum_mapping": {
+        "No": 0,
+        "Don't know": 0,
+        "Yes": 1
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FinancialCapabilityScore6",
+      "title": "Financial Capability Score: Paid late fee",
+      "type": "integer",
+      "constraints": {
+        "minimum": 0,
+        "maximum": 1
+      },
+      "enum_mapping": {
+        "Yes": 0,
+        "No": 1
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfCreditScore",
+      "title": "Current Credit Rating",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 6
+      },
+      "enum_mapping": {
+        "Very bad": 1,
+        "Bad": 2,
+        "About average": 3,
+        "Good": 4,
+        "Very good": 5,
+        "Don't know": 6
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "CreditScore",
+      "title": "Credit Score",
+      "type": "integer",
+      "constraints": {
+        "minimum": 300,
+        "maximum": 850
+      },
+      "milestones": [
+        0,
+        2,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HealthCareScore",
+      "title": "Health Care Rating",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "No medical coverage with immediate need.": 1,
+        "No medical coverage and great difficulty accessing medical care when needed. Some household members may be in poor health.": 2,
+        "Some members (e.g. children) have medical coverage.": 3,
+        "All members can get medical care when needed, but may strain budget.": 4,
+        "All members are covered by affordable, adequate health insurance.": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore",
+      "title": "Self Efficacy Score",
+      "type": "integer",
+      "constraints": {
+        "minimum": 8,
+        "maximum": 40
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore1",
+      "title": "Self Efficacy Score: Will be able to achieve most goals",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore2",
+      "title": "Self Efficacy Score: Will be able to accomplish difficult tasks",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore3",
+      "title": "Self Efficacy Score: can obtain important outcomes",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore4",
+      "title": "Self Efficacy Score: can succeed at most endeavors",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore5",
+      "title": "Self Efficacy Score: can overcome challenges",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore6",
+      "title": "Self Efficacy Score: can perform effectively on many tasks",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore7",
+      "title": "Self Efficacy Score: do most tasks very well compared to others",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "SelfEfficacyScore8",
+      "title": "Self Efficacy Score: can perform well when things are tough",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Strongly agree": 1,
+        "Agree": 2,
+        "Neither agree or disagree": 3,
+        "Disagree": 4,
+        "Strongly disagree": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore",
+      "title": "Grit Score",
+      "type": "integer",
+      "constraints": {
+        "minimum": 8,
+        "maximum": 40
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore1",
+      "title": "Grit Score: New ideas sometimes distract me",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore2",
+      "title": "Grit Score: Delays and obstacles don't discourage me",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore3",
+      "title": "Grit Score: I have been obsessed with a certain idea or project and then lost interest",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore4",
+      "title": "Grit Score: I am a hard worker",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore5",
+      "title": "Grit Score: I often set a goal but then follow another one",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore6",
+      "title": "Grit Score: I have difficulty keeping focus on longer projects",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore7",
+      "title": "Grit Score: I finish whatever I begin",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "GritScore8",
+      "title": "Grit Score: I am hard working and careful",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Very much like me": 1,
+        "Mostly like me": 2,
+        "Somewhat like me": 3,
+        "Not much like me at all": 4,
+        "Not like me at all": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HealthStatusScore",
+      "title": "Health Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "My immediate family or I have physical, mental or substance use concerns that prevent my employment or daily life activities.": 1,
+        "My immediate family or I have physical, mental or substance use concerns that often interfere with my employment or daily life activities.": 2,
+        "My immediate family or I have physical, mental or substance use concerns that sometimes affect my employment or daily life activities.": 3,
+        "My immediate family or I have no physical, mental or substance concerns that affect my employment or daily life activities.": 4,
+        "My immediate family and I are healthy and participate in preventive health measures (examples include annual check-ups, screenings, vaccinations)": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FoodSecurity",
+      "title": "Food Security",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "No food or means to prepare it. Relies to a significant degree on other sources of free or low-cost food.": 1,
+        "Household is on food stamps.": 2,
+        "Can meet basic food needs, but requires occasional assistance.": 3,
+        "Can meet basic food needs without assistance.": 4,
+        "Can choose to purchase the food that the household desires.": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "HousingStability",
+      "title": "Housing Stability",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Homeless or threatened with eviction.": 1,
+        "In transitional, temporary (short-term) or low-quality housing; and/or current rent/mortgage payment is unaffordable (over 30 percent of income).": 2,
+        "In stable housing that is safe but only barely adequate (housing may have small problems).": 3,
+        "Household is in safe, subsidized (receiving assistance to pay rent) housing with no serious problems.": 4,
+        "Household is safe, unsubsidized (no rent assistance) housing with no serious problems.": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "TransportationAccess",
+      "title": "Transportation Access",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "No access to transportation (public or private) or may have car that is inoperable (can’t be driven).": 1,
+        "Transportation is available, but unreliable, unpredictable, unaffordable; or may have car but no insurance, license, etc.": 2,
+        "Transportation is available and reliable, but limited and/or inconvenient; drivers are licensed and minimally insured.": 3,
+        "Transportation is generally accessible to meet basic travel needs.": 4,
+        "Transportation is readily available and affordable; car is adequately insured.": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "ConvictionHistory",
+      "title": "Conviction History",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 4
+      },
+      "enum_mapping": {
+        "Yes, felony": 1,
+        "Yes, misdemeanor": 2,
+        "Yes, multiple misdemeanors": 3,
+        "None": 4
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "ConvictedInLastYear",
+      "title": "Convicted in the Last Year",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Incarcerated",
+      "title": "Incarcerated",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "LegalIssues",
+      "title": "Legal Issues",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "FamilyCare",
+      "title": "Family Care Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "Needs dependent (child or elder) care, but none is available or accessible and/or dependent is not eligible.": 1,
+        "Dependent care is unreliable or unaffordable, not enough supervision is a problem for what care is available.": 2,
+        "Affordable subsidized (assistance in paying for) dependent care is available, but limited.": 3,
+        "Reliable, affordable dependent care is available, no need for subsidies (assistance in paying for care).": 4,
+        "Able to select quality dependent care of choice": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "Clothing",
+      "title": "Clothing Status",
+      "type": "integer",
+      "constraints": {
+        "minimum": 1,
+        "maximum": 5
+      },
+      "enum_mapping": {
+        "No clothing or seriously inadequate clothing. (For example, no coat for winter months, shoes with holes in them or soles lacking, not sufficient clothes to assure clean clothes on a daily basis.) Unaware of where to access assistance.": 1,
+        "Very limited knowledge of resources for low-cost or free options to obtain clothing.": 2,
+        "Occasionally relies on community clothing banks. Has limited knowledge about community resources and/or financial resources to obtain clothing.": 3,
+        "Usually has the financial resource to purchase appropriate clothing. Aware of what is appropriate for work environment.": 4,
+        "Always has a financial resource to purchase appropriate clothing of choice. Aware of what is appropriate for work environment.": 5
+      },
+      "milestones": [
+        0,
+        2,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "name": "CompletedProgram",
+      "title": "Completed Program",
+      "type": "boolean",
+      "trueValues": [
+        "yes",
+        "Y",
+        "true",
+        "T",
+        "1"
+      ],
+      "falseValues": [
+        "no",
+        "N",
+        "false",
+        "F",
+        "2"
+      ],
+      "milestones": [
+        2
+      ]
+    }
+  ],
+  "column_based_milestone_names": [
+      "Intake",
+      "MidPoint",
+      "Exit",
+      "ThirtyDays",
+      "SixtyDays",
+      "NinetyDays",
+      "SixMonths",
+      "OneYear",
+      "TwoYear",
+      "ThreeYear",
+      "FourYear",
+      "FiveYear",
+      "Update"
+  ]
+}

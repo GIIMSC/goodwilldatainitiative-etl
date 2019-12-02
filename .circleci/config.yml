@@ -26,6 +26,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             export SLUGIFY_USES_TEXT_UNIDECODE=yes
+            pip install "pytest==4.6.3"
             pip install -e .
       - save_cache:
           paths:

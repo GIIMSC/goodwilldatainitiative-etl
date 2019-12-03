@@ -101,7 +101,9 @@ def simple_pipeline(
     )
 
     if validation_failures:
-        logging.error("The pipeline could not finish, because some of your column mappings are not valid. Please review the following names in your Column Mappings Google sheet:<br>")
+        logging.error(
+            "The pipeline could not finish, because some of your column mappings are not valid. Please review the following names in your Column Mappings Google sheet:<br>"
+        )
         logging.error(email.format_validation_failures(validation_failures))
         return_val[EMAIL_METADATA_KEY] = validation_failures
         return_val[

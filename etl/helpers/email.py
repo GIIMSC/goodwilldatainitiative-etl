@@ -297,8 +297,8 @@ def format_successful_upload(num_rows_uploaded, dropped_rows, dropped_vals):
     """Format email (HTML) for a successful upload with any dropped data.
     """
     message = f"""
-    <h3>Your Mission Impact upload has completed! Here is an overview:</h3>
-    <ul><li>Rows uploaded: {num_rows_uploaded}</li>
+    <h3>Your Mission Impact upload is complete!</h3>
+    <ul class="meta-list"><li>Rows uploaded: {num_rows_uploaded}</li>
     <li>Rows dropped: {len(dropped_rows)}</li>
     <li>Individual values dropped: {len(dropped_vals)}</li></ul>
     """

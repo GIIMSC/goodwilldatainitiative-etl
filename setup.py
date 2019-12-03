@@ -14,20 +14,20 @@ REQUIRED_PACKAGES = [
     "google-cloud-storage==1.23.0",
     # The Pandas version is actually critical; the nullable int type
     # `pd.Int64Dtype()` was recently added in version 0.24.0.
-    "pandas==0.24.0",
+    "pandas==0.25.2",
     # Required to talk to CaseWorthy API:
     "pycrypto==2.6.1",
     "pyaes==1.6.1",
-    "zeep==3.2.0",
+    "zeep==3.4.0",
     # Old versions of setuptools don't work well with pytest.
     "setuptools>=40.6.3",
     # Others:
-    "tabulate==0.8.2",
+    "tabulate==0.8.5",
     "apache-airflow>=1.10.2",
     "google-api-python-client==1.7.8",
-    "jinja2<=2.10.1,>=2.7.3",
+    "jinja2==2.10.3",
     "pysftp==0.2.9",
-    "requests==2.21.0",
+    "requests==2.22.0",
     "us==1.0.0",
     "simple-salesforce==0.74.2",
     "pendulum==1.4.4",

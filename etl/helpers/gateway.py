@@ -25,10 +25,6 @@ def upload_to_gateway(member_id: str, dataset_file: io.IOBase, gateway_host: str
     # POST the data
     response = requests.post(gateway_host, data=data, files=files, headers=headers)
 
-    # Wait a bit because it takes time to the process to run
-    # TODO(#224): Change this from fixed sleep to exponential backoff w/ retries.
-    time.sleep(5)
-
     process_id = response.json()["process_id"]
     process_result = requests.get(
         f"https://gatewaydevdataupload.goodwill.org/api/v1.0/processes/{process_id}",

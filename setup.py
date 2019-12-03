@@ -29,12 +29,10 @@ REQUIRED_PACKAGES = [
     "pysftp==0.2.9",
     "requests==2.22.0",
     "us==1.0.0",
-    "simple-salesforce==0.74.2",
+    "simple-salesforce==0.74.3",
     "pendulum==1.4.4",
     "pytest-runner==5.1",
     "psycopg2-binary==2.8.2",
-    "Flask==1.1.1",
-    "Werkzeug==0.15.4",
 ]
 
 setuptools.setup(

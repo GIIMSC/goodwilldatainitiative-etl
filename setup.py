@@ -8,7 +8,7 @@ REQUIRED_PACKAGES = [
     "python-Levenshtein==0.12.0",
     # Frictionless data deps.
     "great_expectations==0.4.5",
-    "tableschema==1.3.0",
+    "tableschema==1.10.0",
     # Needed for GCS client library.
     "google-cloud-core==1.0.3",
     "google-cloud-storage==1.23.0",

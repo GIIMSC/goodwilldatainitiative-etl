@@ -10,8 +10,8 @@ REQUIRED_PACKAGES = [
     "great_expectations==0.4.5",
     "tableschema==1.3.0",
     # Needed for GCS client library.
-    "google-cloud-core==0.24.1",
-    "google-cloud-storage==1.14.0",
+    "google-cloud-core==1.0.3",
+    "google-cloud-storage==1.23.0",
     # The Pandas version is actually critical; the nullable int type
     # `pd.Int64Dtype()` was recently added in version 0.24.0.
     "pandas==0.24.0",

@@ -101,7 +101,9 @@ def simple_pipeline(
     )
 
     if validation_failures:
-        logging.error("Column mappings are not valid!")
+        logging.error(
+            "The pipeline could not finish, because some of your column mappings are not valid. Please review the following names in your Column Mappings Google sheet:<br>"
+        )
         logging.error(email.format_validation_failures(validation_failures))
         return_val[EMAIL_METADATA_KEY] = validation_failures
         return_val[
@@ -177,7 +179,7 @@ def simple_pipeline(
 
     if validation_failures:
         logging.error(
-            "Some field mappings are not approved! This may be due to the presence of new response values in your data. Please approve these mappings in Google Sheets and retry upload"
+            'The pipeline could not finish, because some of your field mappings do not have approved values. Most likely, your data has new responses, which require new mappings. Go to your Field Mappings Google sheet, and approve the new mappings by toggling "No" to "Yes" on the following fields:<br>'
         )
         logging.error(email.format_unapproved_mappings(resolved_field_mappings))
         # No need to store email metadata, since resolved field mappings are used to generate

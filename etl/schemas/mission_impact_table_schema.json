@@ -214,7 +214,7 @@
       "allows_multiple": true,
       "constraints": {
         "minimum": 1,
-        "maximum": 8
+        "maximum": 9
       },
       "enum_mapping": {
         "History of Substance Abuse": 1,
@@ -224,7 +224,8 @@
         "Immigrant": 5,
         "Refugee": 6,
         "LGBTQ": 7,
-        "Single Parent": 8
+        "Single Parent": 8,
+        "Other Condition": 9
       },
       "milestones": [
         0

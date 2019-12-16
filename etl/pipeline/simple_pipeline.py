@@ -70,7 +70,7 @@ def simple_pipeline(
         The organization's Member ID.
     row_format : bool
         Whether the data is organized using the Mission Impact Row Format (if
-        this is false, it implies that the data is organiaed using the Mission
+        this is false, it implies that the data is organized using the Mission
         Impact Column Format).
     multiple_val_delimiter : str
         The separator for multiple values in the dataset.

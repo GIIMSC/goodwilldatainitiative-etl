@@ -10,7 +10,7 @@ The `etl` directory has three subdirectories.
 
 **`helpers`** – The ETL business logic. 
 
-**`pipeline`** – A standalone version of the transformation process. `simple_pipeline.py` runs the "T" of the ETL pipeline: it accepts local Goodwill credentials and local Mission Impact data, and it returns data in the standard MI schema, ready to upload to GII Gateway. This script, in particular, serves the [Flask app](https://github.com/GIIMSC/goodwilldatainitiative-idcupload).
+**`pipeline`** – A standalone version of the transformation process. `simple_pipeline.py` runs the "T" of the ETL pipeline: it accepts local Goodwill credentials and local Mission Impact data, and it returns data in the standard MI schema, ready to upload to GII Gateway. Notably, this script can be executed within the Flask app, Airflow tool, or any other platform.
 
 **`schemas`** – A JSON file with the Mission Impact schema – uses the Frictionless [Table Schema](https://frictionlessdata.io/specs/table-schema/) format.
 

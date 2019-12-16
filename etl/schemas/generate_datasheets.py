@@ -5,7 +5,6 @@ from tableschema import Schema
 from etl.helpers import table_schema
 
 # Target names
-CENSUS = "census"
 MISSION_IMPACT = "mi"
 PATHWAYS = "pathways"
 PROGRAMS = "programs"
@@ -18,36 +17,29 @@ MARKDOWN_PATH = "markdown_path"
 NAME = "name"
 
 # TODO: Use pkg_resources instead of relative paths.
-CENSUS_INFO = {
-    JSON_PATH: "goodwilldatainitiative-etl/etl/schemas/census_schema.json",
-    MARKDOWN_PATH: "datasheets/CENSUS.md",
-    NAME: "Census",
-}
 MISSION_IMPACT_INFO = {
-    JSON_PATH: "goodwilldatainitiative-etl/etl/schemas/mission_impact_table_schema.json",
-    MARKDOWN_PATH: "datasheets/MISSION_IMPACT.md",
+    JSON_PATH: "etl/schemas/mission_impact_table_schema.json",
+    MARKDOWN_PATH: "etl/schemas/MISSION_IMPACT.md",
     NAME: "Mission Impact",
 }
 PATHWAYS_INFO = {
-    JSON_PATH: "goodwilldatainitiative-etl/etl/schemas/pathways_schema.json",
+    JSON_PATH: "etl/schemas/pathways_schema.json",
     MARKDOWN_PATH: "datasheets/PATHWAYS.md",
     NAME: "Google Pathways",
 }
 PROGRAMS_INFO = {
-    JSON_PATH: "goodwilldatainitiative-etl/etl/schemas/programs_schema.json",
+    JSON_PATH: "etl/schemas/programs_schema.json",
     MARKDOWN_PATH: "datasheets/PROGRAMS.md",
     NAME: "Programs",
 }
 
 # Converts datasheet (in markdown table format) to validator (in json format).
 #
-# Target indicates which markdown to create. Valid values: 'census', 'mi', 'pathways', 'programs'
+# Target indicates which markdown to create. Valid values: 'mi', 'pathways', 'programs'
 def generate_markdown(target):
 
     # Get information for target.
-    if target == CENSUS:
-        target_info = CENSUS_INFO
-    elif target == MISSION_IMPACT:
+    if target == MISSION_IMPACT:
         target_info = MISSION_IMPACT_INFO
     elif target == PATHWAYS:
         target_info = PATHWAYS_INFO
@@ -192,9 +184,9 @@ def generate_markdown(target):
         f.write(markdown.encode("utf8"))
 
 
-# By default, this generates all three markdown files (census, mission impact, and programs)
+# By default, this generates all three markdown files (mission impact, and programs)
 # and writes the outputs to the datasheets folder. To only generate select files,
-# use arguments 'census', 'mi', 'pathways', and 'programs'.
+# use arguments 'mi', 'pathways', and 'programs'.
 #
 # For example, to only generate the mission impact datasheet, run this command:
 #
@@ -204,8 +196,6 @@ def main():
     # Run all if no arguments.
     run_all = len(sys.argv) == 1
 
-    if run_all or CENSUS in sys.argv:
-        generate_markdown(CENSUS)
     if run_all or MISSION_IMPACT in sys.argv:
         generate_markdown(MISSION_IMPACT)
     if run_all or PATHWAYS in sys.argv:

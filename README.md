@@ -8,11 +8,11 @@ This code comes from [a larger project repo, which has been archived](https://gi
 
 The `etl` directory has three subdirectories.
 
-**`helpers`**. The ETL business logic. 
+**`helpers`** – The ETL business logic. 
 
-**`pipeline`**. A standalone version of the transformation process. `simple_pipeline.py` runs the "T" of the ETL pipeline: it accepts local Goodwill credentials and MI data, and it returns data in the GII MI schema. This script, in particular, serves the [Flask app](https://github.com/GIIMSC/goodwilldatainitiative-idcupload).
+**`pipeline`** – A standalone version of the transformation process. `simple_pipeline.py` runs the "T" of the ETL pipeline: it accepts local Goodwill credentials and local Mission Impact data, and it returns data in the standard MI schema, ready to upload to GII Gateway. This script, in particular, serves the [Flask app](https://github.com/GIIMSC/goodwilldatainitiative-idcupload).
 
-**`schemas`**. A JSON file with the Mission Impact schema – uses the Frictionless [Table Schema](https://frictionlessdata.io/specs/table-schema/) format.
+**`schemas`** – A JSON file with the Mission Impact schema – uses the Frictionless [Table Schema](https://frictionlessdata.io/specs/table-schema/) format.
 
 ## How to Use this Repo
 
@@ -35,7 +35,7 @@ pip install requirements.txt
 # Add this line to your Pipfile
 etl = {editable = true,ref = "master",git = "https://github.com/GIIMSC/goodwilldatainitiative-etl.git"}
 
-# Install it, and update the Pipfile.lock, which pins the repo to the latest commit
+# Install it, and update the Pipfile.lock (n.b., Pipfile.lock pins the repo to the latest commit)
 pipenv install
 ```
 
@@ -71,4 +71,4 @@ The 2019 cohort of Google Fellows devised this ETL pipeline, and the BrightHive 
 * [John Han](https://github.com/hanjohn) (Google)
 * [Joel Jacobs](https://github.com/jacobsjmd) (Google)
 * [Tom Plagge](https://github.com/tplagge) (BrightHive)
-* [Regina Compton]()
+* [Regina Compton](https://github.com/reginafcompton) (BrightHive)

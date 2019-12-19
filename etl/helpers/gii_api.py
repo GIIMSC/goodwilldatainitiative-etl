@@ -6,9 +6,6 @@ import requests
 
 def get_access_token(members_api_url: str, client_id: str, **kwargs):
     token_url = f"{members_api_url}/Api/AuthToken/GetAuthToken?clientKey={client_id}"
-    logging.info(members_api_url)
-    logging.info(token_url)
-    logging.info("**********")
     response_with_token = requests.get(token_url)
 
     return response_with_token.json()["Token"]

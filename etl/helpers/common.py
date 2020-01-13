@@ -27,6 +27,10 @@ def extract_failures_from_ge_result(ge_result):
                 failures[expectation_type] = {
                     FAILED_VALUES_KEY: result["invalid_columns"]
                 }
+            elif expectation_type is "expect_named_cols":
+                failures[expectation_type] = {
+                    FAILED_VALUES_KEY: result["columns_without_headers"]
+                }
             elif expectation_type is EXPECT_COLUMNS_MATCH_KEY:
                 failures[expectation_type] = {
                     FAILED_VALUES_KEY: [

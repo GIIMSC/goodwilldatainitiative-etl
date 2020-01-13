@@ -9,6 +9,7 @@ HEADER = "This is an automated message from the GDI Pipeline.<br><br>"
 
 def format_validation_failures(failures):
     message = "<ul>"
+    # import pdb; pdb.set_trace()
     for expectation_type, failed_info in sorted(failures.items()):
         failed_vals = failed_info[common.FAILED_VALUES_KEY]
 
@@ -16,6 +17,9 @@ def format_validation_failures(failures):
             message += "<li>Invalid column(s) in dataset: {}</li>".format(
                 ", ".join(failed_vals)
             )
+        if expectation_type == "expect_named_cols":
+            message += "<li>Empty Headers</li>"
+            # TODO: Add messaging here!!!!!
         elif expectation_type == common.EXPECT_COLUMNS_MATCH_KEY:
             message += "<li>Headers are incorrect. Header row (the first row in the sheet) should exactly match [{}]</li>".format(
                 ", ".join(failed_info[common.EXPECTED_ORDERED_LIST_KEY])

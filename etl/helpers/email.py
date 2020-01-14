@@ -16,7 +16,7 @@ def format_validation_failures(failures):
             message += "<li>Invalid column(s) in dataset: {}</li>".format(
                 ", ".join(failed_vals)
             )
-        if expectation_type == common.EXPECT_NAMED_COLS:
+        elif expectation_type == common.EXPECT_NAMED_COLS:
             message += "<li>Empty columns. Your data omits one or more header field names. Please delete (or name) the columns in the following position(s): {}</li>".format(
                 ", ".join(failed_vals)
             )

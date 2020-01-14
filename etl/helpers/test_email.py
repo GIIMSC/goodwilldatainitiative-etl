@@ -32,6 +32,7 @@ class EmailTest(unittest.TestCase):
             common.EXPECT_COLUMNS_IN_SET_KEY: {
                 common.FAILED_VALUES_KEY: ["INVALID_COLUMN"]
             },
+            common.EXPECT_NAMED_COLS: {common.FAILED_VALUES_KEY: ["4", "155"],},
             common.EXPECT_COLUMNS_MATCH_KEY: {
                 common.EXPECTED_ORDERED_LIST_KEY: ["Input", "Output", "Approved"],
                 common.FAILED_VALUES_KEY: [None],
@@ -41,6 +42,7 @@ class EmailTest(unittest.TestCase):
         self.assertEqual(
             '<ul><li>Some values for "Output" are invalid: invalid, other_invalid</li>'
             + '<li>No duplicates allowed for "Input". The following values had duplicates: repeated_field, other_field</li>'
+            + "<li>Empty columns. Your data omits one or more header field names. Please delete (or name) the columns in the following position(s): 4, 155</li>"
             + "<li>Invalid column(s) in dataset: INVALID_COLUMN</li>"
             + "<li>Headers are incorrect. Header row (the first row in the sheet) should exactly match [Input, Output, Approved]</li></ul>",
             email.format_validation_failures(failures),

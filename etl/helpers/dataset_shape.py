@@ -101,8 +101,6 @@ class DatasetShapeValidator:
         dataset_ge.expect_table_columns_to_be_in_set(valid_cols)
         dataset_ge.expect_named_cols()
 
-        # import pdb; pdb.set_trace()
-
         return dataset_ge
 
     def validate_multiple_dataset_shape(
@@ -110,9 +108,6 @@ class DatasetShapeValidator:
     ) -> Dict:
         """Validates all datasets and returns map of dataset_name -> failures.
         If map is empty, then all dataset shapes are valid."""
-
-        # import pdb; pdb.set_trace()
-
         return common.ge_results_to_failure_map(
             {
                 dataset_name: self._get_shape_expectations(dataset).validate()

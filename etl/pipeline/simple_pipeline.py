@@ -136,7 +136,6 @@ def simple_pipeline(
 
     if validation_failures:
         logging.error("Dataset shape is not valid!")
-        # import pdb; pdb.set_trace()
         for _, validation_failure in validation_failures.items():
             logging.error(email.format_validation_failures(validation_failure))
         return_val[EMAIL_METADATA_KEY] = validation_failures

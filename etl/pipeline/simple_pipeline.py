@@ -134,6 +134,8 @@ def simple_pipeline(
         schema, column_mapping, row_format
     ).validate_multiple_dataset_shape(data)
 
+    # import pdb; pdb.set_trace()
+
     if validation_failures:
         logging.error("Dataset shape is not valid!")
         for _, validation_failure in validation_failures.items():

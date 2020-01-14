@@ -28,33 +28,16 @@ class ShapePandasDataset(PandasDataset):
         On failure, details are provided on the location of the unexpected
         column(s).
         """
+        named_columns = [col for col in self.columns if "Unnamed:" not in col]
 
-        if set(self.columns) <= set(column_list):
+        if set(named_columns) <= set(column_list):
             return {"success": True}
-        else:
-            """
-            This step partitions the invalid columns into error-specific groups.
-            Pandas describes columns without headers as "Unnamed": the user should see
-            a particular message for such columns, as opposed to columns not identified in
-            the Goodwill column mappings sheet. 
-            """
-            all_invalid_cols = sorted(list(set(self.columns) - set(column_list)))
-            cols_without_header = []
-            other_invalid_cols = []
-            for col in all_invalid_cols:
-                if "Unnamed" in col:
-                    cols_without_header.append(col)
-                else:
-                    other_invalid_cols.append(col)
 
-            invalid_columns = {
-                "columns_without_header": cols_without_header,
-                "other_invalid_columns": other_invalid_cols,
-            }
-            return {
-                "success": False,
-                "invalid_columns": other_invalid_cols,
-            }
+        invalid_cols = sorted(list(set(named_columns) - set(column_list)))
+        return {
+            "success": False,
+            "invalid_columns": invalid_cols,
+        }
 
     @Dataset.expectation(["column_list"])
     def expect_named_cols(
@@ -64,8 +47,11 @@ class ShapePandasDataset(PandasDataset):
         catch_exceptions=None,
         meta=None,
     ):
+
         cols = list(set(self.columns))
         columns_without_headers = [col[9:] for col in cols if "Unnamed" in col]
+        if not columns_without_headers:
+            return {"success": True}
 
         return {"success": False, "columns_without_headers": columns_without_headers}
 

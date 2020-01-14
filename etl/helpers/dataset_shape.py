@@ -28,15 +28,32 @@ class ShapePandasDataset(PandasDataset):
         On failure, details are provided on the location of the unexpected
         column(s).
         """
+        named_columns = [col for col in self.columns if "Unnamed:" not in col]
 
-        if set(self.columns) <= set(column_list):
+        if set(named_columns) <= set(column_list):
             return {"success": True}
-        else:
-            # TODO add details about invalid columns
-            return {
-                "success": False,
-                "invalid_columns": sorted(list(set(self.columns) - set(column_list))),
-            }
+
+        invalid_cols = sorted(list(set(named_columns) - set(column_list)))
+        return {
+            "success": False,
+            "invalid_columns": invalid_cols,
+        }
+
+    @Dataset.expectation(["column_list"])
+    def expect_named_cols(
+        self,
+        result_format=None,
+        include_config=False,
+        catch_exceptions=None,
+        meta=None,
+    ):
+
+        cols = list(set(self.columns))
+        columns_without_headers = [col[9:] for col in cols if "Unnamed" in col]
+        if not columns_without_headers:
+            return {"success": True}
+
+        return {"success": False, "columns_without_headers": columns_without_headers}
 
 
 class DatasetShapeValidator:
@@ -59,7 +76,6 @@ class DatasetShapeValidator:
         Validations:
         - Dataset columns names are a subset of mapped column names and table_schema field names
         """
-
         dataset_ge = ge.from_pandas(dataset, dataset_class=ShapePandasDataset)
         dataset_ge.set_default_expectation_argument("result_format", "COMPLETE")
 
@@ -69,13 +85,15 @@ class DatasetShapeValidator:
         valid_cols: List[str] = list(self.column_mapping.keys()) + valid_field_names
 
         dataset_ge.expect_table_columns_to_be_in_set(valid_cols)
+        dataset_ge.expect_named_cols()
+
         return dataset_ge
 
     def validate_multiple_dataset_shape(
         self, datasets: Dict[str, pd.DataFrame]
     ) -> Dict:
         """Validates all datasets and returns map of dataset_name -> failures.
-        If map is empty, the all dataset shapes are valid."""
+        If map is empty, then all dataset shapes are valid."""
         return common.ge_results_to_failure_map(
             {
                 dataset_name: self._get_shape_expectations(dataset).validate()

@@ -16,6 +16,10 @@ def format_validation_failures(failures):
             message += "<li>Invalid column(s) in dataset: {}</li>".format(
                 ", ".join(failed_vals)
             )
+        elif expectation_type == common.EXPECT_NAMED_COLS:
+            message += "<li>Empty columns. Your data omits one or more header field names. Please delete (or name) the columns in the following position(s): {}</li>".format(
+                ", ".join(failed_vals)
+            )
         elif expectation_type == common.EXPECT_COLUMNS_MATCH_KEY:
             message += "<li>Headers are incorrect. Header row (the first row in the sheet) should exactly match [{}]</li>".format(
                 ", ".join(failed_info[common.EXPECTED_ORDERED_LIST_KEY])

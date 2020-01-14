@@ -2,6 +2,7 @@ EXPECT_COLUMNS_IN_SET_KEY = "expect_table_columns_to_be_in_set"
 EXPECT_COLUMNS_MATCH_KEY = "expect_table_columns_to_match_ordered_list"
 EXPECT_VALUES_IN_SET_KEY = "expect_column_values_to_be_in_set"
 EXPECT_VALUES_UNIQUE_KEY = "expect_column_values_to_be_unique"
+EXPECT_NAMED_COLS = "expect_named_cols"
 
 COLUMN_NAME_KEY = "column_name"
 FAILED_VALUES_KEY = "failed_vals"
@@ -26,6 +27,10 @@ def extract_failures_from_ge_result(ge_result):
             if expectation_type is EXPECT_COLUMNS_IN_SET_KEY:
                 failures[expectation_type] = {
                     FAILED_VALUES_KEY: result["invalid_columns"]
+                }
+            elif expectation_type is EXPECT_NAMED_COLS:
+                failures[expectation_type] = {
+                    FAILED_VALUES_KEY: result["columns_without_headers"]
                 }
             elif expectation_type is EXPECT_COLUMNS_MATCH_KEY:
                 failures[expectation_type] = {

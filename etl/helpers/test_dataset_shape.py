@@ -147,6 +147,30 @@ class DatasetShapeValidatorTest(unittest.TestCase):
             validation_failures,
         )
 
+    def test_validate_dataset_shape_col_format_some_are_empty(self):
+        dataset_shape_validator = dataset_shape.DatasetShapeValidator(
+            TEST_SCHEMA_COL, {}, row_format=False
+        )
+        dataset = pd.DataFrame(
+            data={
+                "field1": [1, 2],
+                "Intakefield2": [3, 4],
+                "Intakefield3": [3, 4],
+                "Exitfield3": [3, 4],
+                "Unnamed: 5": "",
+            }
+        )
+
+        validation_failures = dataset_shape_validator.validate_multiple_dataset_shape(
+            {"dataset1": dataset}
+        )
+
+        self.assertTrue(validation_failures)
+        self.assertEqual(
+            {"dataset1": {common.EXPECT_NAMED_COLS: {common.FAILED_VALUES_KEY: ["5"]}}},
+            validation_failures,
+        )
+
 
 class DatasetShapeTest(unittest.TestCase):
     def test_transform_dataset_shape_datset_is_empty(self):

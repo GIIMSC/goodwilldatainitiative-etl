@@ -13,23 +13,23 @@ def format_validation_failures(failures):
         failed_vals = failed_info[common.FAILED_VALUES_KEY]
 
         if expectation_type == common.EXPECT_COLUMNS_IN_SET_KEY:
-            message += "<li><strong>Invalid column(s)</strong> in dataset: {}</li>".format(
+            message += "<li>Invalid column(s) in dataset: {}</li>".format(
                 ", ".join(failed_vals)
             )
         if expectation_type == common.EXPECT_NAMED_COLS:
-            message += "<li><strong>Empty columns.</strong> Your data omits one or more header field names. Please delete (or name) the columns in the following position(s): {}</li>".format(
+            message += "<li>Empty columns. Your data omits one or more header field names. Please delete (or name) the columns in the following position(s): {}</li>".format(
                 ", ".join(failed_vals)
             )
         elif expectation_type == common.EXPECT_COLUMNS_MATCH_KEY:
-            message += "<li><strong>Headers are incorrect.</strong> Header row (the first row in the sheet) should exactly match [{}]</li>".format(
+            message += "<li>Headers are incorrect. Header row (the first row in the sheet) should exactly match [{}]</li>".format(
                 ", ".join(failed_info[common.EXPECTED_ORDERED_LIST_KEY])
             )
         elif expectation_type == common.EXPECT_VALUES_IN_SET_KEY:
-            message += '<li><strong>Some values for "{}" are invalid</strong>: {}</li>'.format(
+            message += '<li>Some values for "{}" are invalid: {}</li>'.format(
                 failed_info[common.COLUMN_NAME_KEY], ", ".join(failed_vals)
             )
         elif expectation_type == common.EXPECT_VALUES_UNIQUE_KEY:
-            message += '<li><strong>No duplicates allowed</strong> for "{}". The following values had duplicates: {}</li>'.format(
+            message += '<li>No duplicates allowed for "{}". The following values had duplicates: {}</li>'.format(
                 failed_info[common.COLUMN_NAME_KEY], ", ".join(failed_vals)
             )
 

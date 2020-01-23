@@ -16,6 +16,7 @@ The `etl` directory has three subdirectories.
 
 ## How to Use this Repo
 
+### Installation
 This repo comes with a handy `setup.py`, which makes easy the installation of `goodwilldatainitiative-etl` and the required dependencies. You can install it directly from Github using one of the following approaches:
 
 ```
@@ -45,6 +46,11 @@ You can import the etl module and/or specific methods the usual way, for example
 from etl.helpers import drive, gateway, table_schema
 from etl.pipeline import simple_pipeline
 ```
+
+### Configuration
+The `gii_api` and `gateway` scripts facilitate the retrieval of member information and the submission of MI data: both processes rely on an auth flow, wherein a client requests an access token and exchanges the token when GETing or POSTing data. 
+
+Please contact [Chirag Patel](chirag.patel@goodwill.org ) to set-up a client subscription.
 
 ## Tests, Linting, and CircleCI
 

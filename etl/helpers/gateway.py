@@ -5,13 +5,18 @@ import requests
 
 
 def upload_to_gateway(
-    member_id: str, dataset_file: io.IOBase, gateway_host: str, access_token: str
+    member_id: str, dataset_file: io.IOBase, gateway_host: str, access_token: str, authorization: str
 ):
     """
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
-    headers = {"member_id": member_id, "user_id": "airflow-test", "token": access_token}
+    headers = {
+        "member_id": member_id, 
+        "authorization": authorization, 
+        "user_id": "airflow-test", 
+        "token": access_token
+    }
 
     # Metadata for upload
     data = {
@@ -42,6 +47,7 @@ def airflow_upload_to_gateway(
     get_member_xcom_args,
     get_token_xcom_args,
     gateway_host: str,
+    authorization: str,
     ti,
     **kwargs,
 ):
@@ -54,6 +60,6 @@ def airflow_upload_to_gateway(
 
     if dataset_filename is not None:
         with open(dataset_filename, "r") as f:
-            upload_to_gateway(member_id, f, gateway_host, access_token)
+            upload_to_gateway(member_id, f, gateway_host, access_token, authorization)
     else:
         logging.info("No data to upload.")

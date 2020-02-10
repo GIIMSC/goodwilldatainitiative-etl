@@ -5,17 +5,21 @@ import requests
 
 
 def upload_to_gateway(
-    member_id: str, dataset_file: io.IOBase, gateway_host: str, access_token: str, authorization: str
+    member_id: str,
+    dataset_file: io.IOBase,
+    gateway_host: str,
+    access_token: str,
+    authorization: str,
 ):
     """
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
     headers = {
-        "member_id": member_id, 
-        "authorization": authorization, 
-        "user_id": "airflow-test", 
-        "token": access_token
+        "member_id": member_id,
+        "authorization": authorization,
+        "user_id": "airflow-test",
+        "token": access_token,
     }
 
     # Metadata for upload

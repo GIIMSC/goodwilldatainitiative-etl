@@ -37,15 +37,20 @@ def get_column_format_fields(
              admin_field1, admin_field2, ...
            ]
     """
+    # Retrieve the values described here:
+    # https://github.com/GIIMSC/goodwilldatainitiative-etl/blob/master/etl/schemas/mission_impact_table_schema.json#L2250
     milestone_names: typing.List[str] = get_milestone_names(table_schema)
 
     field_names_by_milestone: FieldNamesByMilestone = {}
     field_names_admin: FieldNamesAdmin = []
 
+    # Put milestone names into a dict
     for milestone_name in milestone_names:
         field_names_by_milestone[milestone_name] = {}
 
     for field in table_schema.fields:
+        # Some fields do not store data relating to participant milestone, e.g. "toDelete"
+        # We flag these as "admin fields" and continue iteration over JSON fields.
         if "milestones" not in field.descriptor:
             field_names_admin.append(field.name)
             continue

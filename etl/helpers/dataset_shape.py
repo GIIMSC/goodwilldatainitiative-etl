@@ -133,7 +133,9 @@ class DatasetShapeTransformer:
 
         # For each milestone, move the data for that milestone into their own rows
         for milestone_name, fields_for_milestone in field_names_by_milestone.items():
-            # Get the columns for this milestone
+            # Get the milestone-specific columns from the local Goodwills dataset
+            # E.g., a dataset might have 68 columns for Intake milestone data.
+            # The milestone_dataset will contain those 68 columns (but not the other 300+ columns).
             milestone_field_names = fields_for_milestone.keys()
             milestone_dataset = dataset[
                 list(set(milestone_field_names) & set(dataset.columns.values))
@@ -226,7 +228,6 @@ class DatasetShapeTransformer:
     def transform_dataset_shape(self, dataset: pd.DataFrame) -> pd.DataFrame:
         if dataset.empty:
             return dataset
-
         shaped_dataset = self._transform_shape(dataset)
 
         shaped_dataset = shaped_dataset.fillna("").astype(str)

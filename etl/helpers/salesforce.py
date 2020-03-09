@@ -50,6 +50,8 @@ def airflow_extract_data(
     """Extracts data from Salesforce that was modified between the start date
     and the execution date.
     """
+    import pdb; pdb.set_trace()
+    
     member_id = kwargs["task_instance"].xcom_pull(**get_member_xcom_args)
     logging.info("Pulled a member id from `get_member` task.")
     logging.info(member_id)

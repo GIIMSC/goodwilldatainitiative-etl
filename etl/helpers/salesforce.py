@@ -35,6 +35,10 @@ def parse_sf_record(nested_dict: Dict) -> Dict:
 def _get_sf_records(sf_hook: SalesforceHook, query: str) -> pd.DataFrame:
     query_result = sf_hook.make_query(query)
     records = [parse_sf_record(record) for record in query_result["records"]]
+
+    logging.info("RECORDS")
+    logging.info(records)
+    
     df = pd.DataFrame.from_records(records)
     return df
 
@@ -50,8 +54,7 @@ def airflow_extract_data(
     """Extracts data from Salesforce that was modified between the start date
     and the execution date.
     """
-    import pdb; pdb.set_trace()
-    
+
     member_id = kwargs["task_instance"].xcom_pull(**get_member_xcom_args)
     logging.info("Pulled a member id from `get_member` task.")
     logging.info(member_id)
@@ -62,22 +65,36 @@ def airflow_extract_data(
     sf_hook: SalesforceHook = SalesforceHook(conn_id=CONN_ID)
     docs_service = drive.get_google_docs_service(drive_credentials)
 
+    logging.info("Execution date")
+    logging.info(execution_date)
+
     start_datetime, end_datetime = dates.airflow_get_date_range(
         member_id, start_date, execution_date
     )
+
+    logging.info("Dates")
+    logging.info(start_datetime)
+    logging.info(end_datetime)
 
     filenames: List[str] = []
 
     for document_id in QUERIES:
         # Load the query and replace the dates
         query: str = drive.load_doc_as_query(docs_service, document_id)
+
+        logging.info("A query:")
+        logging.info(query)
+
         template = jinja2.Template(query)
         query_with_dates: str = template.render(
             start_datetime=f"{start_datetime}Z", end_datetime=f"{end_datetime}Z"
         )
 
+        logging.info(query_with_dates)
+
         # Get the data and write it to a .csv
         records_dataframe: pd.DataFrame = _get_sf_records(sf_hook, query_with_dates)
+
         if not records_dataframe.empty:
             tf = tempfile.NamedTemporaryFile(delete=False)
             records_dataframe.to_csv(tf.name, index=False)

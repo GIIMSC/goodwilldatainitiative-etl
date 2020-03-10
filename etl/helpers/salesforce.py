@@ -36,9 +36,6 @@ def _get_sf_records(sf_hook: SalesforceHook, query: str) -> pd.DataFrame:
     query_result = sf_hook.make_query(query)
     records = [parse_sf_record(record) for record in query_result["records"]]
 
-    logging.info("RECORDS")
-    logging.info(records)
-    
     df = pd.DataFrame.from_records(records)
     return df
 
@@ -56,8 +53,6 @@ def airflow_extract_data(
     """
 
     member_id = kwargs["task_instance"].xcom_pull(**get_member_xcom_args)
-    logging.info("Pulled a member id from `get_member` task.")
-    logging.info(member_id)
 
     CONN_ID = cms_info["connection_id"]
     QUERIES = cms_info["queries"]
@@ -65,15 +60,16 @@ def airflow_extract_data(
     sf_hook: SalesforceHook = SalesforceHook(conn_id=CONN_ID)
     docs_service = drive.get_google_docs_service(drive_credentials)
 
-    logging.info("Execution date")
+    logging.info("execution_date")
     logging.info(execution_date)
 
     start_datetime, end_datetime = dates.airflow_get_date_range(
         member_id, start_date, execution_date
     )
 
-    logging.info("Dates")
+    logging.info("Calculated start_datetime")
     logging.info(start_datetime)
+    logging.info("Calculated end_datetime")
     logging.info(end_datetime)
 
     filenames: List[str] = []
@@ -82,14 +78,12 @@ def airflow_extract_data(
         # Load the query and replace the dates
         query: str = drive.load_doc_as_query(docs_service, document_id)
 
-        logging.info("A query:")
-        logging.info(query)
-
         template = jinja2.Template(query)
         query_with_dates: str = template.render(
             start_datetime=f"{start_datetime}Z", end_datetime=f"{end_datetime}Z"
         )
 
+        logging.info("Query with populated WHERE clause:")
         logging.info(query_with_dates)
 
         # Get the data and write it to a .csv

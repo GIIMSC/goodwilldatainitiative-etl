@@ -1,8 +1,9 @@
 import datetime
-import pandas as pd
-from dateutil import parser
+import logging
 
+import pandas as pd
 from airflow.models import Variable
+from dateutil import parser
 
 LAST_MODIFIED_COL_NAME = "LastModifiedDate"
 
@@ -26,6 +27,9 @@ def airflow_get_date_range(member_id, start_date, execution_date):
         default_var=start_date - datetime.timedelta(days=1),
     )
 
+    logging.info("last_successful_upload_date")
+    logging.info(last_successful_upload_date)
+
     # The date will be a string if the variable exists, so parse it
     if isinstance(last_successful_upload_date, str):
         last_successful_upload_date = parser.parse(last_successful_upload_date)
@@ -33,6 +37,10 @@ def airflow_get_date_range(member_id, start_date, execution_date):
     # Uploading should start from the day after the last successful upload date
     # and end on the day of execution (today)
     start_upload_date = last_successful_upload_date + datetime.timedelta(days=1)
+
+    logging.info("start_upload_date")
+    logging.info(start_upload_date)
+
     return get_date_range(start_upload_date, execution_date)
 
 

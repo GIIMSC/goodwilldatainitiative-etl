@@ -46,7 +46,7 @@ def extract_data(
             raw_df, member_id, start_date, execution_date
         )
 
-        # Re-write file.
-        data.to_csv(tf.name, index=False)
+        # Re-write file with filtered dates.
+        data.to_csv(filename, index=False)
 
     return filenames

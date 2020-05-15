@@ -345,6 +345,8 @@
         "2"
       ],
       "milestones": [
+        3,
+        4,
         5,
         6,
         7,
@@ -518,6 +520,8 @@
       },
       "milestones": [
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -538,6 +542,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -563,6 +569,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -598,6 +606,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -633,6 +643,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -669,6 +681,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -681,6 +695,8 @@
       "custom_milestone_field_names": {
         "0": "IntakeCurrentMostRecentJobRetirement",
         "2": "ExitJobPlacementJobRetirement",
+        "3": "ThirtyDaysRetirementSavings",
+        "4": "SixtyDaysRetirementSavings",
         "5": "NinetyDaysRetirementSavings",
         "6": "SixMonthsRetirementSavings",
         "7": "OneYearRetirementSavings",
@@ -702,6 +718,8 @@
       "milestones": [
         0,
         2,
+        3,
+        4,
         5,
         6,
         7,
@@ -728,6 +746,8 @@
       },
       "milestones": [
         2,
+        3,
+        4,
         5,
         6,
         7,

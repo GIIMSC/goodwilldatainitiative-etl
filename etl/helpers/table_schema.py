@@ -93,7 +93,7 @@ def get_valid_field_names(table_schema: Schema, row_format: bool) -> typing.List
 
 
 def validate_schema(table_schema: Schema) -> bool:
-    """Returns True iff table_schema appears to be valid for pipeline processing.
+    """Returns True if table_schema appears to be valid for pipeline processing.
 
     This will only fail if the schema itself or pipeline code are incorrect, so
     the local Goodwills need only make sure that the maintainers are aware of

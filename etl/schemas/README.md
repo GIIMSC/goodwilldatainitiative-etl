@@ -171,8 +171,3 @@ TODO: one value --> multiple values
 1. Edit Google Forms Solution to make sure that this field is not collected for the removed milestone
 1. Remove the milestone index from the `milestone` list for the field in [mission_impact_table_schema.json](mission_impact_table_schema.json)
 1. Make any changes required in the GII databases / Gateway to stop accepting the field for that milestone and clean up the data
-
-
-## Programs spec
-
-TODO

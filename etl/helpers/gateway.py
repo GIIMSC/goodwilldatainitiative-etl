@@ -5,22 +5,19 @@ import requests
 
 
 def upload_to_gateway(
-    member_id: str,
-    dataset_file: io.IOBase,
     gateway_host: str,
+    member_id: str,
     access_token: str,
-    authorization: str,
+    dataset_file: io.IOBase,
 ):
     """
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
-    headers = {
-        "member_id": member_id,
-        "authorization": authorization,
-        "user_id": "airflow-test",
-        "token": access_token,
-    }
+    # headers = {
+    #     "member_id": member_id,
+    #     "token": access_token,
+    # }
 
     # Metadata for upload
     data = {
@@ -33,8 +30,16 @@ def upload_to_gateway(
     # Open the file
     files = {"file": dataset_file}
 
+    headers = {
+        "member_id": member_id,
+        "token": access_token
+    }
+
+    import pdb; pdb.set_trace()
     # POST the data
-    response = requests.post(gateway_host, data=data, files=files, headers=headers)
+    # response = requests.post(gateway_host, data=data, files=files, headers=headers)
+
+    response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
     process_id = response.json()["process_id"]
     process_result = requests.get(

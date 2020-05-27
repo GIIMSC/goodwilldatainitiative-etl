@@ -34,10 +34,12 @@ def upload_to_gateway(
     # POST the data
     response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
-    # TODO:
-    # Add a check for 202
-    # IF 202: then continue
-    # ELSE: raise an error
+    if response.status_code is not 202:
+        logging.error(response.text)
+        raise RuntimeError
+    
+    logging.info(response.text)
+    return response.text
 
 
 def airflow_upload_to_gateway(
@@ -45,7 +47,6 @@ def airflow_upload_to_gateway(
     get_member_xcom_args,
     get_token_xcom_args,
     gateway_host: str,
-    authorization: str,
     ti,
     **kwargs,
 ):
@@ -57,7 +58,12 @@ def airflow_upload_to_gateway(
     logging.info(member_id)
 
     if dataset_filename is not None:
-        with open(dataset_filename, "r") as f:
-            upload_to_gateway(member_id, f, gateway_host, access_token, authorization)
+        with open(dataset_filename, "r") as file_to_upload:
+            upload_to_gateway(
+                gateway_host=gateway_host,
+                member_id=member_id,
+                access_token=access_token,
+                dataset_file=file_to_upload,
+            )
     else:
         logging.info("No data to upload.")

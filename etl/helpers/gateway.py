@@ -14,12 +14,13 @@ def upload_to_gateway(
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
-    # headers = {
-    #     "member_id": member_id,
-    #     "token": access_token,
-    # }
+    headers = {
+        "member_id": member_id,
+        "token": access_token
+    }
 
-    # Metadata for upload
+
+    # Metadata for upload – do we still need this?
     data = {
         "file_format": "delimited",
         "data_profile": "mission_impact_rows",
@@ -30,25 +31,13 @@ def upload_to_gateway(
     # Open the file
     files = {"file": dataset_file}
 
-    headers = {
-        "member_id": member_id,
-        "token": access_token
-    }
-
-    import pdb; pdb.set_trace()
     # POST the data
-    # response = requests.post(gateway_host, data=data, files=files, headers=headers)
-
     response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
-    process_id = response.json()["process_id"]
-    process_result = requests.get(
-        f"https://gatewaydevdataupload.goodwill.org/api/v1.0/processes/{process_id}",
-        headers=headers,
-    )
-
-    # TODO: handle invalid upload
-    return process_result
+    # TODO:
+    # Add a check for 202
+    # IF 202: then continue
+    # ELSE: raise an error
 
 
 def airflow_upload_to_gateway(

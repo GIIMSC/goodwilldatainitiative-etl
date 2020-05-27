@@ -5,20 +5,13 @@ import requests
 
 
 def upload_to_gateway(
-    gateway_host: str,
-    member_id: str,
-    access_token: str,
-    dataset_file: io.IOBase,
+    gateway_host: str, member_id: str, access_token: str, dataset_file: io.IOBase,
 ):
     """
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
-    headers = {
-        "member_id": member_id,
-        "token": access_token
-    }
-
+    headers = {"member_id": member_id, "token": access_token}
 
     # Metadata for upload – do we still need this?
     data = {
@@ -37,7 +30,7 @@ def upload_to_gateway(
     if response.status_code is not 202:
         logging.error(response.text)
         raise RuntimeError
-    
+
     logging.info(response.text)
     return response.text
 

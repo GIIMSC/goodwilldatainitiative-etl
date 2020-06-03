@@ -5,24 +5,15 @@ import requests
 
 
 def upload_to_gateway(
-    member_id: str,
-    dataset_file: io.IOBase,
-    gateway_host: str,
-    access_token: str,
-    authorization: str,
+    gateway_host: str, member_id: str, access_token: str, dataset_file: io.IOBase,
 ):
     """
     Uploads data from a local filesystem CSV to GII's Gateway API.
     """
     # Headers for upload
-    headers = {
-        "member_id": member_id,
-        "authorization": authorization,
-        "user_id": "airflow-test",
-        "token": access_token,
-    }
+    headers = {"member_id": member_id, "token": access_token}
 
-    # Metadata for upload
+    # Metadata for upload – do we still need this?
     data = {
         "file_format": "delimited",
         "data_profile": "mission_impact_rows",
@@ -34,16 +25,14 @@ def upload_to_gateway(
     files = {"file": dataset_file}
 
     # POST the data
-    response = requests.post(gateway_host, data=data, files=files, headers=headers)
+    response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
-    process_id = response.json()["process_id"]
-    process_result = requests.get(
-        f"https://gatewaydevdataupload.goodwill.org/api/v1.0/processes/{process_id}",
-        headers=headers,
-    )
+    if response.status_code is not 202:
+        logging.error(response.text)
+        raise RuntimeError
 
-    # TODO: handle invalid upload
-    return process_result
+    logging.info(response.text)
+    return response.text
 
 
 def airflow_upload_to_gateway(
@@ -51,7 +40,6 @@ def airflow_upload_to_gateway(
     get_member_xcom_args,
     get_token_xcom_args,
     gateway_host: str,
-    authorization: str,
     ti,
     **kwargs,
 ):
@@ -63,7 +51,12 @@ def airflow_upload_to_gateway(
     logging.info(member_id)
 
     if dataset_filename is not None:
-        with open(dataset_filename, "r") as f:
-            upload_to_gateway(member_id, f, gateway_host, access_token, authorization)
+        with open(dataset_filename, "r") as file_to_upload:
+            upload_to_gateway(
+                gateway_host=gateway_host,
+                member_id=member_id,
+                access_token=access_token,
+                dataset_file=file_to_upload,
+            )
     else:
         logging.info("No data to upload.")

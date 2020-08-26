@@ -27,6 +27,8 @@ def upload_to_gateway(
     # POST the data
     response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
+    logging.info(data)
+
     if response.status_code is not 202:
         logging.error(response.text)
         raise RuntimeError

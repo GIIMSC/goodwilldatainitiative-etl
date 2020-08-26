@@ -176,7 +176,7 @@ def simple_pipeline(
     validation_failures: Dict[
         str, Dict
     ] = FieldMappingApprovalValidator().validate_multiple(resolved_field_mappings)
-
+    
     if validation_failures:
         logging.error(
             'The pipeline could not finish, because some of your field mappings do not have approved values. Most likely, your data has new responses, which require new mappings. Go to your Field Mappings Google sheet, and approve the new mappings by toggling "No" to "Yes" on the following fields:<br>'
@@ -190,6 +190,7 @@ def simple_pipeline(
         return return_val
 
     # Process Data
+    # TODO: Determine if `DataProcessor` should have a deduplication step!
     transformed_dataset, invalid_values, dropped_rows = DataProcessor(
         resolved_field_mappings, schema
     ).process(combined_shaped_dataset)

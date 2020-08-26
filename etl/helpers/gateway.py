@@ -27,7 +27,8 @@ def upload_to_gateway(
     # POST the data
     response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
-    logging.info(data)
+    logging.info(dataset_file)
+    logging.info("data done!")
 
     if response.status_code is not 202:
         logging.error(response.text)
@@ -53,6 +54,8 @@ def airflow_upload_to_gateway(
     logging.info(member_id)
 
     if dataset_filename is not None:
+        logging.info(dataset_filename)
+        logging.info("!!!!!!!!!!!!!!!")
         with open(dataset_filename, "r") as file_to_upload:
             upload_to_gateway(
                 gateway_host=gateway_host,

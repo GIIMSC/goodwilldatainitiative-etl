@@ -54,8 +54,6 @@ def airflow_upload_to_gateway(
     logging.info(member_id)
 
     if dataset_filename is not None:
-        logging.info(dataset_filename)
-        logging.info("!!!!!!!!!!!!!!!")
         with open(dataset_filename, "r") as file_to_upload:
             upload_to_gateway(
                 gateway_host=gateway_host,

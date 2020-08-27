@@ -441,6 +441,26 @@ class GatewayDatasetShapeTransformerTest(unittest.TestCase):
             expected_shaped_dataset, actual_shaped_dataset
         )
 
+    def test_transform_dataset_shape_deduplicates_dataframe(self):
+        dataset = pd.DataFrame(
+            data={
+                "field1": ["1", "2", "duplicate", "duplicate"],
+                "field2": ["3", "4", "duplicate", "duplicate"],
+            }
+        )
+
+        actual_shaped_dataset = dataset_shape.GatewayDatasetShapeTransformer(
+            TEST_SCHEMA
+        ).transform_dataset_shape(dataset)
+
+        expected_shaped_dataset = pd.DataFrame(
+            data={"field1": ["1", "2", "duplicate"], "field2": ["3", "4", "duplicate"],}
+        )
+
+        pd.util.testing.assert_frame_equal(
+            expected_shaped_dataset, actual_shaped_dataset
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

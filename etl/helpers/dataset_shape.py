@@ -242,7 +242,8 @@ class DatasetShapeTransformer:
 class GatewayDatasetShapeTransformer:
     """
     Class that transforms processed datasets into a format that can be uploaded
-    to Gateway.
+    to Gateway. This includes a final deduplication step,
+    since Gateway does not accept files with duplicate records.
     """
 
     def __init__(self, table_schema: Schema):
@@ -282,5 +283,7 @@ class GatewayDatasetShapeTransformer:
 
         for column_name in multiple_val_schema_cols:
             self._reformat_multiple_val_col(dataset, column_name)
+
+        dataset = dataset.drop_duplicates().reset_index(drop=True)
 
         return dataset

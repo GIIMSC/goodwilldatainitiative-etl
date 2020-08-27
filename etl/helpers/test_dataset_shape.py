@@ -426,15 +426,30 @@ class DatasetShapeTest(unittest.TestCase):
 class GatewayDatasetShapeTransformerTest(unittest.TestCase):
     def test_transform_dataset_shape(self):
         dataset = pd.DataFrame(
-            data={"field1": [1, 2], "field2": [3, 4], "field3": [[3, 4], [2, 4]]}
+            data={
+                "Date": ["2020-07-28", "2020-03-10"],
+                "CaseNumber": [1, 2],
+                "MilestoneFlag": ["Intake", "Exit"],
+                "MemberOrganization": ["abc", "def"],
+                "field3": [
+                    [3, 4],
+                    [2, 4],
+                ],  # Lists should be converted to comma separated strings
+            }
         )
 
         actual_shaped_dataset = dataset_shape.GatewayDatasetShapeTransformer(
             TEST_SCHEMA
         ).transform_dataset_shape(dataset)
 
-        expected_shaped_dataset = dataset = pd.DataFrame(
-            data={"field1": [1, 2], "field2": [3, 4], "field3": ["3,4", "2,4"]}
+        expected_shaped_dataset = pd.DataFrame(
+            data={
+                "Date": ["2020-07-28", "2020-03-10"],
+                "CaseNumber": [1, 2],
+                "MilestoneFlag": ["Intake", "Exit"],
+                "MemberOrganization": ["abc", "def"],
+                "field3": ["3,4", "2,4"],
+            }
         )
 
         pd.util.testing.assert_frame_equal(
@@ -444,8 +459,10 @@ class GatewayDatasetShapeTransformerTest(unittest.TestCase):
     def test_transform_dataset_shape_deduplicates_dataframe(self):
         dataset = pd.DataFrame(
             data={
-                "field1": ["1", "2", "duplicate", "duplicate"],
-                "field2": ["3", "4", "duplicate", "duplicate"],
+                "Date": ["2019-12-28", "2019-11-10", "2019-12-31", "2020-1-25"],
+                "CaseNumber": ["1", "2", "duplicate", "duplicate"],
+                "MilestoneFlag": ["3", "4", "duplicate", "duplicate"],
+                "MemberOrganization": ["abc", "def", "duplicate", "duplicate"],
             }
         )
 
@@ -454,7 +471,12 @@ class GatewayDatasetShapeTransformerTest(unittest.TestCase):
         ).transform_dataset_shape(dataset)
 
         expected_shaped_dataset = pd.DataFrame(
-            data={"field1": ["1", "2", "duplicate"], "field2": ["3", "4", "duplicate"],}
+            data={
+                "Date": ["2020-1-25", "2019-12-28", "2019-11-10"],
+                "CaseNumber": ["duplicate", "1", "2"],
+                "MilestoneFlag": ["duplicate", "3", "4"],
+                "MemberOrganization": ["duplicate", "abc", "def"],
+            }
         )
 
         pd.util.testing.assert_frame_equal(

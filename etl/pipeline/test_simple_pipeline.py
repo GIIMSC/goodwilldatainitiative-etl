@@ -57,12 +57,10 @@ class TestPipeline(unittest.TestCase):
         assert pipeline_return_vals["email_metadata"]["dropped_values"] == []
 
         expected_case_nums = pd.Series(
-            ["CASEID-000001", "CASEID-000002", "CASEID-000003", "CASEID-000004"]
+            ["CASEID-000001", "CASEID-000002", "CASEID-000004", "CASEID-000003"]
         )
         case_nums = pipeline_return_vals["dataset"]["CaseNumber"]
-        pd.testing.assert_series_equal(
-            case_nums, expected_case_nums, check_index_type=False, check_names=False
-        )
+        pd.testing.assert_series_equal(case_nums, expected_case_nums, check_names=False)
 
 
 if __name__ == "__main__":

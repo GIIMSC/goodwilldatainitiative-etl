@@ -33,6 +33,11 @@ class TestPipeline(unittest.TestCase):
         shutil.rmtree(TEMP_MAPPING_DIR)
 
     def test_missionImpact(self):
+        """
+        This test runs 'fake_data.csv' through the simple_pipeline.
+        'fake_data.csv' (and the corresponding column and field mappings) should not raise any errors, and so, the
+        assertions check for expected values in 'email_metadata' and 'dataset'.
+        """
         pipeline_return_vals = simple_pipeline.from_local(
             member_id=MEMBER_ID,
             row_format=True,
@@ -46,7 +51,16 @@ class TestPipeline(unittest.TestCase):
         resolved_field_mappings = pipeline_return_vals["field_mappings"]
         self.assertIsInstance(resolved_field_mappings, Dict)
 
-        # TODO improve this test
+        # fake_data.csv contains six rows (with two duplicates), and so, we expect only four rows in 'num_rows_to_upload'.
+        assert pipeline_return_vals["email_metadata"]["num_rows_to_upload"] == 4
+        assert pipeline_return_vals["email_metadata"]["dropped_rows"] == []
+        assert pipeline_return_vals["email_metadata"]["dropped_values"] == []
+
+        expected_case_nums = pd.Series(
+            ["CASEID-000001", "CASEID-000002", "CASEID-000004", "CASEID-000003"]
+        )
+        case_nums = pipeline_return_vals["dataset"]["CaseNumber"]
+        pd.testing.assert_series_equal(case_nums, expected_case_nums, check_names=False)
 
 
 if __name__ == "__main__":

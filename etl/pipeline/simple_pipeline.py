@@ -190,7 +190,6 @@ def simple_pipeline(
         return return_val
 
     # Process Data
-    # TODO: Determine if `DataProcessor` should have a deduplication step!
     transformed_dataset, invalid_values, dropped_rows = DataProcessor(
         resolved_field_mappings, schema
     ).process(combined_shaped_dataset)

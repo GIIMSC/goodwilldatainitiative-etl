@@ -29,10 +29,18 @@ def upload_to_gateway(
 
     if response.status_code is not 202:
         logging.error(response.text)
-        raise RuntimeError
+        # raise RuntimeError
+
+        # Logic:
+        # 1. Check for "No intake records errors"
+        # 2. If yes, then return task_id
+        # 3. If no, then raise RuntimeError
+        # Think about raising: AirflowFailException - https://airflow.apache.org/docs/stable/concepts.html?highlight=branches#exceptions
+        return "drop_rows_without_intake_records"
 
     logging.info(response.text)
-    return response.text
+    # return response.text
+    return "send_upload_report_email"
 
 
 def airflow_upload_to_gateway(
@@ -53,7 +61,7 @@ def airflow_upload_to_gateway(
     if dataset_filename is not None:
         logging.info(f"Location of the file-to-upload: {dataset_filename}")
         with open(dataset_filename, "r") as file_to_upload:
-            upload_to_gateway(
+            return upload_to_gateway(
                 gateway_host=gateway_host,
                 member_id=member_id,
                 access_token=access_token,

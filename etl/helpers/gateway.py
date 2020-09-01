@@ -3,9 +3,13 @@ import logging
 import time
 import requests
 
+from etl.helpers.errors import GatewayIntakeError
+from etl.pipeline.simple_pipeline import DROP_ROWS_WITHOUT_INTAKE_RECORDS, SEND_UPLOAD_REPORT_EMAIL
+
 # Gateway returns this message in response.text
 # The ETL pipeline parses this message, filters the DataFrame, and resubmits data to Gateway.
 INTAKE_ERROR = "No 'Intake' records found"
+
 
 def upload_to_gateway(
     gateway_host: str, member_id: str, access_token: str, dataset_file: io.IOBase,
@@ -30,19 +34,15 @@ def upload_to_gateway(
     # POST the data
     response = requests.post(gateway_host, headers=headers, data=data, files=files)
 
-    if response.status_code is not 202 and INTAKE_ERROR not in response.text:
+    if INTAKE_ERROR in response.text:
+        logging.error(response.text)
+        raise GatewayIntakeError(message=response.text)
+    elif response.status_code is not 202:
         logging.error(response.text)
         raise RuntimeError
-
-        # Logic:
-        # 1. Check for "No intake records errors"
-        # 2. If yes, then return task_id
-        # 3. If no, then raise RuntimeError
-        # Think about raising: AirflowFailException - https://airflow.apache.org/docs/stable/concepts.html?highlight=branches#exceptions
-        # return "drop_rows_without_intake_records"
-
-    logging.info(response.text)
-    return response.text
+    else:
+        logging.info(response.text)
+        return response.text
 
 
 def airflow_upload_to_gateway(
@@ -50,6 +50,7 @@ def airflow_upload_to_gateway(
     get_member_xcom_args,
     get_token_xcom_args,
     gateway_host: str,
+    intake_error_xcom_key,
     ti,
     **kwargs,
 ):
@@ -63,17 +64,17 @@ def airflow_upload_to_gateway(
     if dataset_filename is not None:
         logging.info(f"Location of the file-to-upload: {dataset_filename}")
         with open(dataset_filename, "r") as file_to_upload:
-            response_text = upload_to_gateway(
-                gateway_host=gateway_host,
-                member_id=member_id,
-                access_token=access_token,
-                dataset_file=file_to_upload,
-            )
-
-            if INTAKE_ERROR in response.text:
-                # TODO: store the error itself somewhere...
-                return "drop_rows_without_intake_records" # TODO: store in a ENV VAR
+            try:
+                response_text = upload_to_gateway(
+                    gateway_host=gateway_host,
+                    member_id=member_id,
+                    access_token=access_token,
+                    dataset_file=file_to_upload,
+                )
+            except GatewayIntakeError as error:
+                ti.xcom_push(key=intake_error_xcom_key, value=error.message)
+                return DROP_ROWS_WITHOUT_INTAKE_RECORDS
             else:
-                return "send_upload_report_email"
+                return SEND_UPLOAD_REPORT_EMAIL
     else:
         logging.info("No data to upload.")

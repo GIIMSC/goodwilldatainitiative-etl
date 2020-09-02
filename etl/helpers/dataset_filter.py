@@ -1,8 +1,9 @@
 import re
 import pandas as pd
-
+import tempfile
 
 import logging
+
 
 def find_case_numbers(response_text: str):
     """
@@ -26,10 +27,23 @@ def drop_rows_without_intake_records(dataframe: pd.DataFrame, response_text: str
     return dataframe.reset_index(drop=True)
 
 
-def airflow_drop_rows_without_intake_records(transform_data_as_dataframe_xcom_args, intake_error_xcom_key, ti, **kwargs):
+def airflow_drop_rows_without_intake_records(transform_data_as_dataframe_xcom_args, intake_error_xcom_args, ti, **kwargs):
     dataframe = ti.xcom_pull(**transform_data_as_dataframe_xcom_args)
+    error_message = ti.xcom_pull(**intake_error_xcom_args)
 
     logging.info(dataframe)
+    logging.info(error_message)
+    
+    filtered_dataframe = drop_rows_without_intake_records(dataframe=dataframe, response_text=error_message)
 
-    # drop_rows_without_intake_records()
+    logging.info(filtered_dataframe)
+
+    tf = tempfile.NamedTemporaryFile(delete=False)
+    filtered_dataframe.to_csv(tf.name)
+    # ti.xcom_push(key=transformed_data_xcom_key, value=tf.name)
+
+    logging.info(tf.name)
+    
+    return tf.name
+
 

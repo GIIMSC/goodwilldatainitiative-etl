@@ -49,12 +49,15 @@ def airflow_upload_to_gateway(
     transform_data_xcom_args,
     get_member_xcom_args,
     get_token_xcom_args,
-    gateway_host: str,
     intake_error_xcom_key,
+    gateway_host: str,
     ti,
     **kwargs,
 ):
     dataset_filename = ti.xcom_pull(**transform_data_xcom_args)
+    logging.info(f"Location of the file-to-upload: {dataset_filename}")
+
+    logging.info(transform_data_xcom_args)
 
     access_token = ti.xcom_pull(**get_token_xcom_args)
     member_id = ti.xcom_pull(**get_member_xcom_args)
@@ -62,7 +65,6 @@ def airflow_upload_to_gateway(
     logging.info(member_id)
 
     if dataset_filename is not None:
-        logging.info(f"Location of the file-to-upload: {dataset_filename}")
         with open(dataset_filename, "r") as file_to_upload:
             try:
                 response_text = upload_to_gateway(

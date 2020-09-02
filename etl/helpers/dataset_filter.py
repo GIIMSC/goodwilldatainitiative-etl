@@ -6,8 +6,7 @@ import logging
 
 
 def find_case_numbers(response_text: str):
-    """
-    This function extracts a list case numbers from a string.
+    """This function extracts a list case numbers from a string.
 
     Arguments:
         - the response text from the Gateway API, which appears in the following format:
@@ -28,22 +27,18 @@ def drop_rows_without_intake_records(dataframe: pd.DataFrame, response_text: str
 
 
 def airflow_drop_rows_without_intake_records(transform_data_as_dataframe_xcom_args, intake_error_xcom_args, ti, **kwargs):
+    """This function pulls the dataframe (from simple_pipeline) 
+    and error message (from airflow_upload_to_gateway) from Airflow XComs.
+    Then, this function drops 'bad' rows, saves to a TempFile, and returns the location
+    of the file.
+    """
     dataframe = ti.xcom_pull(**transform_data_as_dataframe_xcom_args)
     error_message = ti.xcom_pull(**intake_error_xcom_args)
-
-    logging.info(dataframe)
-    logging.info(error_message)
     
     filtered_dataframe = drop_rows_without_intake_records(dataframe=dataframe, response_text=error_message)
-
-    logging.info(filtered_dataframe)
-
     tf = tempfile.NamedTemporaryFile(delete=False)
     filtered_dataframe.to_csv(tf.name)
-    # ti.xcom_push(key=transformed_data_xcom_key, value=tf.name)
 
-    logging.info(tf.name)
-    
     return tf.name
 
 

@@ -57,12 +57,9 @@ def airflow_upload_to_gateway(
     dataset_filename = ti.xcom_pull(**transform_data_xcom_args)
     logging.info(f"Location of the file-to-upload: {dataset_filename}")
 
-    logging.info(transform_data_xcom_args)
-
     access_token = ti.xcom_pull(**get_token_xcom_args)
     member_id = ti.xcom_pull(**get_member_xcom_args)
-    logging.info("Pulled a member id from `get_member` task.")
-    logging.info(member_id)
+    logging.info(f"Pulled member_id {member_id} from `get_member` task.")
 
     if dataset_filename is not None:
         with open(dataset_filename, "r") as file_to_upload:

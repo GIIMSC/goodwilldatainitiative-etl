@@ -2,7 +2,7 @@
 # It provides a way to inject the `goodwilldatainitiative-etl` package into an Airflow container.
 #
 # $ docker build -t docker-airflow:latest .
-FROM puckel/docker-airflow:1.10.2
+FROM puckel/docker-airflow:1.10.9
 
 USER root
 

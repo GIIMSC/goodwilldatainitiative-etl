@@ -383,6 +383,7 @@ def airflow_from_drive(
     if transformed_dataset is None:
         ti.xcom_push(key=transformed_data_xcom_key, value=None)
     else:
+        # Store the data as a DataFrame and in a Tempfile (for Gateway upload)
         ti.xcom_push(key=transformed_data_as_dataframe_xcom_key, value=transformed_dataset)
 
         tf = tempfile.NamedTemporaryFile(delete=False)

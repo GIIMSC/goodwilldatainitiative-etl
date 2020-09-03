@@ -31,7 +31,7 @@ def test_find_case_numbers(response_text, expected_case_numbers):
 
 
 def test_from_csv_drop_rows_without_intake_records():
-    tempfile_name = dataset_filter.from_csv_drop_rows_without_intake_records(
+    tempfile_name, _ = dataset_filter.from_csv_drop_rows_without_intake_records(
         datafile_name=MI_DATAFILE, response_text=RESPONSE_TEXT
     )
     tf = open(tempfile_name)
@@ -51,6 +51,10 @@ def test_from_csv_drop_rows_without_intake_records():
 
     # Clean up
     os.remove(tempfile_name)
+
+
+def test_from_csv_drop_rows_without_intake_records_dropped_rows():
+    pass
 
 
 # TODO: New test!

@@ -52,7 +52,11 @@ def from_csv_drop_rows_without_intake_records(datafile_name: str, response_text:
 
 
 def airflow_drop_rows_without_intake_records(
-    intake_error_xcom_args, transform_data_xcom_args, email_metadata_xcom_args, ti, **kwargs
+    intake_error_xcom_args,
+    transform_data_xcom_args,
+    email_metadata_xcom_args,
+    ti,
+    **kwargs
 ):
     """This function pulls the transformed (as processed in `simple_pipeline`) 
     and error message (as returned from `airflow_upload_to_gateway`) from Airflow XComs.
@@ -67,16 +71,8 @@ def airflow_drop_rows_without_intake_records(
 
     # Update email metadata
     email_metadata = ti.xcom_pull(**email_metadata_xcom_args)
-    email_metadata['num_rows_to_upload'] -= len(dropped_rows)
-    email_metadata['dropped_rows'] += dropped_rows
+    email_metadata["num_rows_to_upload"] -= len(dropped_rows)
+    email_metadata["dropped_rows"] += dropped_rows
     ti.xcom_push(key=email_metadata_xcom_args["key"], value=email_metadata)
-
-    logging.info(len(dropped_rows))
-    logging.info(dropped_rows)
-    logging.info(email_metadata_xcom_args["key"])
-    logging.info(email_metadata)
-
-    email_metadata = ti.xcom_pull(**email_metadata_xcom_args)
-    logging.info(email_metadata)
 
     return filtered_dataset_filename

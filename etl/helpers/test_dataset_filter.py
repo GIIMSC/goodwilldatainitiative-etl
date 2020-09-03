@@ -49,6 +49,9 @@ def test_from_csv_drop_rows_without_intake_records():
     assert "CASEID-000001" not in full_text
     assert "CASEID-000003" not in full_text
 
+    # Clean up
+    os.remove(tempfile_name)
+
 
 # TODO: New test!
 # def test_drop_rows_without_intake_records():

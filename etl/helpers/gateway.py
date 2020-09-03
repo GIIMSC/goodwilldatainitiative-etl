@@ -4,7 +4,10 @@ import time
 import requests
 
 from etl.helpers.errors import GatewayIntakeError
-from etl.pipeline.simple_pipeline import DROP_ROWS_WITHOUT_INTAKE_RECORDS, SEND_UPLOAD_REPORT_EMAIL
+from etl.pipeline.simple_pipeline import (
+    DROP_ROWS_WITHOUT_INTAKE_RECORDS,
+    SEND_UPLOAD_REPORT_EMAIL,
+)
 
 # Gateway returns this message in response.text
 # The ETL pipeline parses this message, filters the DataFrame, and resubmits data to Gateway.

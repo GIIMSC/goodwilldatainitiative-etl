@@ -290,7 +290,6 @@ def airflow_from_drive(
     email_metadata_xcom_key: str,
     resolved_field_mappings_xcom_key: str,
     transformed_data_xcom_key: str,
-    transformed_data_as_dataframe_xcom_key: str,
     ti,
     **kwargs
 ):
@@ -317,8 +316,6 @@ def airflow_from_drive(
         XCOM key to store resolved field mappings.
     transformed_data_xcom_key : str
         XCOM key to store transformed data.
-    transformed_data_as_dataframe_xcom_key : str
-        XCOM key to store transformed dataframe.
     ti : type
         Airflow task instance.
     **kwargs : type
@@ -383,9 +380,6 @@ def airflow_from_drive(
     if transformed_dataset is None:
         ti.xcom_push(key=transformed_data_xcom_key, value=None)
     else:
-        # Store the data as a DataFrame and in a Tempfile (for Gateway upload)
-        ti.xcom_push(key=transformed_data_as_dataframe_xcom_key, value=transformed_dataset)
-
         tf = tempfile.NamedTemporaryFile(delete=False)
         transformed_dataset.to_csv(tf.name)
         ti.xcom_push(key=transformed_data_xcom_key, value=tf.name)

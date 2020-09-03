@@ -3,6 +3,7 @@ import etl.helpers.field_mapping as fm
 
 from airflow.utils.email import send_email
 from etl.helpers import common, data_processor
+from etl.helpers.dataset_filter import MISSING_INTAKE_RECORD_KEY
 
 HEADER = "This is an automated message from the GDI Pipeline.<br><br>"
 
@@ -65,11 +66,16 @@ def format_dropped_rows(dropped_rows):
     message = "<ul>"
     for row_info in dropped_rows:
         row = row_info[data_processor.ROW_KEY]
-        message += "<li><i>(CaseNumber: '{}', MilestoneFlag: '{}')</i> Dropped because of {}</li>".format(
+        message += "<li><i>(CaseNumber: '{}', MilestoneFlag: '{}')</i>".format(
             row["CaseNumber"] if "CaseNumber" in row else None,
-            row["MilestoneFlag"] if "MilestoneFlag" in row else None,
-            ", ".join(_format_dropped_row_reasons(row_info)),
+            row["MilestoneFlag"] if "MilestoneFlag" in row else None
         )
+
+        if row_info[MISSING_INTAKE_RECORD_KEY]:
+             message += "Dropped because the rows do not have corresponding 'Intake' records in the GII MIP database.</li>"
+        else:
+            message += "Dropped because of {}</li>".format(", ".join(_format_dropped_row_reasons(row_info)))
+
     return message + "</ul>"
 
 

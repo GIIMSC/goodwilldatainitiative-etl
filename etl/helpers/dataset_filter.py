@@ -27,7 +27,7 @@ def drop_rows_without_intake_records(dataframe: pd.DataFrame, response_text: str
     return dataframe.reset_index(drop=True)
 
 
-def drop_rows_from_csv_without_intake_records(datafile_name: str, response_text: str):
+def from_csv_drop_rows_without_intake_records(datafile_name: str, response_text: str):
     case_numbers = find_case_numbers(response_text)
     tf = tempfile.NamedTemporaryFile(delete=False)
 
@@ -54,7 +54,7 @@ def airflow_drop_rows_without_intake_records(
     """
     error_message = ti.xcom_pull(**intake_error_xcom_args)
     dataset_filename = ti.xcom_pull(**transform_data_xcom_args)
-    filtered_dataset_filename = drop_rows_from_csv_without_intake_records(
+    filtered_dataset_filename = from_csv_drop_rows_without_intake_records(
         dataset_filename, error_message
     )
 

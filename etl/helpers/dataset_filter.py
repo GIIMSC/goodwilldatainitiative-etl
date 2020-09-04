@@ -24,17 +24,38 @@ def find_case_numbers(response_text: str):
     return re.findall(pattern, response_text)
 
 
-def drop_rows_without_intake_records(dataframe: pd.DataFrame, response_text: str):
-    case_numbers = find_case_numbers(response_text)
-    dataframe = dataframe[dataframe.CaseNumber.isin(case_numbers) == False]
+def from_dataframe_drop_rows_without_intake_records(
+    dataframe: pd.DataFrame, response_text: str
+):
+    """
+    This function drops 'bad' records from a Dataframe; it returns the 'good' records in one
+    DataFrame and the 'bad' records in another DataFrame.
 
-    return dataframe.reset_index(drop=True)
+    This function is useful when executing the pipeline outside of an Airflow context, e.g., the IDCUploader.
+    """
+    dropped_rows = []
+    case_numbers = find_case_numbers(response_text)
+    filtered_dataframe = dataframe[dataframe.CaseNumber.isin(case_numbers) == False]
+    dataframe_with_dropped_records = dataframe[dataframe.CaseNumber.isin(case_numbers)]
+
+    # Record dropped rows.
+    for ind, row in dataframe_with_dropped_records.iterrows():
+        row = dataframe.loc[ind]
+        dropped_rows.append({ROW_KEY: row, MISSING_INTAKE_RECORD_KEY: True})
+
+    return filtered_dataframe.reset_index(drop=True), dropped_rows
 
 
 def from_csv_drop_rows_without_intake_records(datafile_name: str, response_text: str):
+    """
+    This function drops 'bad' records from a csv; it writes the 'good' records to
+    a new csv/tempfile, and it pushes the 'bad' records into a list.
+
+    This function is useful when executing the pipeline within an Airflow context.
+    """
+    dropped_rows = []
     case_numbers = find_case_numbers(response_text)
     tf = tempfile.NamedTemporaryFile(delete=False)
-    dropped_rows = []
 
     with open(datafile_name, "rt") as mip_data_with_bad_records, open(
         tf.name, "w"

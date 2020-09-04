@@ -4,6 +4,7 @@ import pytest
 import pkg_resources
 
 from etl.helpers import dataset_filter
+from etl.helpers.dataset_filter import MISSING_INTAKE_RECORD_KEY
 
 TEST_DIR = pkg_resources.resource_filename("testfiles", "")
 MI_TEST_DIR = os.path.join(TEST_DIR, "mission_impact/")
@@ -53,33 +54,65 @@ def test_from_csv_drop_rows_without_intake_records():
     os.remove(tempfile_name)
 
 
-def test_from_csv_drop_rows_without_intake_records_dropped_rows():
-    pass
+def test_from_csv_drop_rows_():
+    _, dropped_rows = dataset_filter.from_csv_drop_rows_without_intake_records(
+        datafile_name=MI_DATAFILE, response_text=RESPONSE_TEXT
+    )
+
+    assert dropped_rows[0]["row"]["CaseNumber"] == "CASEID-000001"
+    assert dropped_rows[0][MISSING_INTAKE_RECORD_KEY]
+    assert dropped_rows[1]["row"]["CaseNumber"] == "CASEID-000003"
+    assert dropped_rows[1][MISSING_INTAKE_RECORD_KEY]
 
 
-# TODO: New test!
-# def test_drop_rows_without_intake_records():
-#     response_text = RESPONSE_TEXT
-#     input_dataframe = pd.DataFrame(
-#         data={
-#             "Date": ["2020-07-28", "2020-03-10", "2020-03-10"],
-#             "CaseNumber": ["CASEID-000001", "CASEID-000003", "CASEID-xyzxyz"],
-#             "MilestoneFlag": ["SixtyDays", "SixtyDays", "Intake"],
-#             "MemberOrganization": ["abc", "abc", "abc"],
-#         }
-#     )
+def test_from_dataframe_drop_rows_without_intake_records():
+    response_text = RESPONSE_TEXT
+    input_dataframe = pd.DataFrame(
+        data={
+            "Date": ["2020-07-28", "2020-03-10", "2020-03-10"],
+            "CaseNumber": ["CASEID-000001", "CASEID-000003", "CASEID-xyzxyz"],
+            "MilestoneFlag": ["SixtyDays", "SixtyDays", "Intake"],
+            "MemberOrganization": ["abc", "abc", "abc"],
+        }
+    )
 
-#     expected_dataframe = pd.DataFrame(
-#         data={
-#             "Date": ["2020-03-10"],
-#             "CaseNumber": ["CASEID-xyzxyz"],
-#             "MilestoneFlag": ["Intake"],
-#             "MemberOrganization": ["abc"],
-#         }
-#     )
+    expected_dataframe = pd.DataFrame(
+        data={
+            "Date": ["2020-03-10"],
+            "CaseNumber": ["CASEID-xyzxyz"],
+            "MilestoneFlag": ["Intake"],
+            "MemberOrganization": ["abc"],
+        }
+    )
 
-#     output_dataframe = dataset_filter.drop_rows_without_intake_records(
-#         input_dataframe, response_text
-#     )
+    (
+        output_dataframe,
+        _,
+    ) = dataset_filter.from_dataframe_drop_rows_without_intake_records(
+        input_dataframe, response_text
+    )
 
-#     pd.util.testing.assert_frame_equal(expected_dataframe, output_dataframe)
+    pd.util.testing.assert_frame_equal(expected_dataframe, output_dataframe)
+
+
+def test_from_dataframe_drop_rows_return_bad_records():
+    response_text = RESPONSE_TEXT
+    input_dataframe = pd.DataFrame(
+        data={
+            "Date": ["2020-07-28", "2020-03-10", "2020-03-10"],
+            "CaseNumber": ["CASEID-000001", "CASEID-000003", "CASEID-xyzxyz"],
+            "MilestoneFlag": ["SixtyDays", "Exit", "Intake"],
+            "MemberOrganization": ["abc", "abc", "abc"],
+        }
+    )
+
+    _, dropped_rows = dataset_filter.from_dataframe_drop_rows_without_intake_records(
+        input_dataframe, response_text
+    )
+
+    assert dropped_rows[0]["row"]["CaseNumber"] == "CASEID-000001"
+    assert dropped_rows[0]["row"]["MilestoneFlag"] == "SixtyDays"
+    assert dropped_rows[0][MISSING_INTAKE_RECORD_KEY]
+    assert dropped_rows[1]["row"]["CaseNumber"] == "CASEID-000003"
+    assert dropped_rows[1]["row"]["MilestoneFlag"] == "Exit"
+    assert dropped_rows[1][MISSING_INTAKE_RECORD_KEY]

@@ -79,7 +79,7 @@ def airflow_drop_rows_without_intake_records(
     ti,
     **kwargs
 ):
-    """This function pulls the transformed (as processed in `simple_pipeline`) 
+    """This function pulls the transformed data (as processed in `simple_pipeline`) 
     and error message (as returned from `airflow_upload_to_gateway`) from Airflow XComs.
     Then, this function drops 'bad' rows, saves to a TempFile, and returns the location
     of the file.

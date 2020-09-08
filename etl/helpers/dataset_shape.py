@@ -274,7 +274,6 @@ class GatewayDatasetShapeTransformer:
         logging.info(f"Length of dataset *before* dedupe: {dataset.shape[0]}")
 
         dataset = dataset.sort_values(by=["Date"], ascending=False)
-        # TODO: Wait for GII to provide subset.
         dataset = dataset.drop_duplicates(
             subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
         ).reset_index(drop=True)

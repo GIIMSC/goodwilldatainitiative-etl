@@ -42,6 +42,8 @@ SEND_FIELD_MAPPING_INVALID_EMAIL_TASK_ID = "send_field_mapping_invalid_email"
 SEND_FIELD_MAPPING_APPROVAL_EMAIL_TASK_ID = "send_field_mapping_approval_email"
 UPLOAD_DATA_TASK_ID = "upload_data"
 WRITE_FIELD_MAPPINGS_TASK_ID = "write_field_mappings"
+DROP_ROWS_WITHOUT_INTAKE_RECORDS = "drop_rows_without_intake_records"
+SEND_UPLOAD_REPORT_EMAIL = "send_upload_report_email"
 
 # Dummy operator task ids
 FIELD_MAPPING_APPROVAL_DUMMY_TASK_ID = "field_mapping_approval_dummy_task"
@@ -278,7 +280,6 @@ def from_local(
 
 
 def airflow_from_drive(
-    # member_id: str,
     row_format: bool,
     multiple_val_delimiter: str,
     load_schema_xcom_args,

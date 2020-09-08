@@ -8,6 +8,7 @@ from etl.helpers.field_mapping.common import (
     OUTPUT_COLUMN_NAME,
     APPROVED_COLUMN_NAME,
 )
+from etl.helpers.dataset_filter import MISSING_INTAKE_RECORD_KEY
 
 """Unit tests for email helpers.
 
@@ -104,7 +105,7 @@ class EmailTest(unittest.TestCase):
     def test_format_dropped_rows(self):
         test_dataframe = pd.DataFrame(
             {
-                "MilestoneFlag": ["Intake", None, "INVALID_FLAG"],
+                "MilestoneFlag": ["Intake", None, "Exit"],
                 "MemberOrganization": ["aaa-111", "aaa-111", "aaa-111"],
                 "HourlyWage": ["$8.8", "$10.10", "$12.12"],
             }
@@ -121,14 +122,14 @@ class EmailTest(unittest.TestCase):
             },
             {
                 data_processor.ROW_KEY: test_dataframe.loc[2],
-                data_processor.MISSING_FIELDS_KEY: ["MilestoneFlag", "CaseNumber"],
+                MISSING_INTAKE_RECORD_KEY: True,
             },
         ]
 
         self.assertEqual(
             "<ul><li><i>(CaseNumber: 'None', MilestoneFlag: 'Intake')</i> Dropped because of CaseNumber (missing)</li>"
             + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'None')</i> Dropped because of MilestoneFlag (missing), CaseNumber (missing)</li>"
-            + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'INVALID_FLAG')</i> Dropped because of MilestoneFlag (Invalid value: INVALID_FLAG), CaseNumber (missing)</li></ul>",
+            + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'Exit')</i> Dropped because the row does not have a corresponding 'Intake' record in the GII MIP database</li></ul>",
             email.format_dropped_rows(dropped_rows),
         )
 

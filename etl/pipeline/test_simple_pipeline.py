@@ -10,6 +10,7 @@ import pandas as pd
 from typing import Dict
 
 from etl.pipeline import simple_pipeline
+from etl.helpers.data_processor import DUPLICATE_ROWS_KEY
 
 MEMBER_ID = "member_id"
 MULTIPLE_VAL_DELIMITER = ";"
@@ -51,14 +52,30 @@ class TestPipeline(unittest.TestCase):
         resolved_field_mappings = pipeline_return_vals["field_mappings"]
         self.assertIsInstance(resolved_field_mappings, Dict)
 
-        # fake_data.csv contains six rows (with two duplicates), and so, we expect only four rows in 'num_rows_to_upload'.
-        assert pipeline_return_vals["email_metadata"]["num_rows_to_upload"] == 4
-        assert pipeline_return_vals["email_metadata"]["dropped_rows"] == []
+        # fake_data.csv contains six rows (with two pairs of duplicates), and so, we expect only two rows in 'num_rows_to_upload'.
+        assert pipeline_return_vals["email_metadata"]["num_rows_to_upload"] == 2
         assert pipeline_return_vals["email_metadata"]["dropped_values"] == []
-
-        expected_case_nums = pd.Series(
-            ["CASEID-000001", "CASEID-000002", "CASEID-000004", "CASEID-000003"]
+        assert len(pipeline_return_vals["email_metadata"]["dropped_rows"]) == 4
+        assert (
+            pipeline_return_vals["email_metadata"]["dropped_rows"][0]["row"][
+                "CaseNumber"
+            ]
+            == "CASEID-000002"
         )
+        assert pipeline_return_vals["email_metadata"]["dropped_rows"][0][
+            DUPLICATE_ROWS_KEY
+        ]
+        assert (
+            pipeline_return_vals["email_metadata"]["dropped_rows"][2]["row"][
+                "CaseNumber"
+            ]
+            == "CASEID-000004"
+        )
+        assert pipeline_return_vals["email_metadata"]["dropped_rows"][2][
+            DUPLICATE_ROWS_KEY
+        ]
+
+        expected_case_nums = pd.Series(["CASEID-000001", "CASEID-000003"])
         case_nums = pipeline_return_vals["dataset"]["CaseNumber"]
         pd.testing.assert_series_equal(case_nums, expected_case_nums, check_names=False)
 

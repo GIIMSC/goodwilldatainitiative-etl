@@ -73,6 +73,8 @@ def format_dropped_rows(dropped_rows):
 
         if row_info.get(MISSING_INTAKE_RECORD_KEY):
             message += "Dropped because the row does not have a corresponding 'Intake' record in the GII MIP database</li>"
+        elif row_info.get(data_processor.DUPLICATE_ROWS_KEY):
+            message += "Dropped because the uploaded data has duplicate instances of this record. Duplicate records have the same MileStoneFlag, CaseNumber, and MemberOrganization.</li>"
         else:
             message += "Dropped because of {}</li>".format(
                 ", ".join(_format_dropped_row_reasons(row_info))

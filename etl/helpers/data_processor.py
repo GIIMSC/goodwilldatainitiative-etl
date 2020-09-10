@@ -25,6 +25,7 @@ ORIGINAL_VALUE_KEY = "original_value"
 INVALID_REASON_KEY = "invalid_reasons"
 
 MISSING_FIELDS_KEY = "missing_fields"
+DUPLICATE_ROWS_KEY = "duplicate_rows"
 ROW_KEY = "row"
 
 
@@ -392,6 +393,28 @@ class DataProcessor:
         """Returns all required fields that are missing in a row."""
         return [f for f in required_fields if row[f] is BLANK_VALUE]
 
+    def _drop_duplicates(self, dataset):
+        """Returns a DataFrame with duplicate records removed and a DataFrame with the first instance of
+        each duplicate record.
+
+        GII defines 'duplicate' as records with the same CaseNumber, MilestoneFlag, and MemberOrganization.
+        """
+        logging.info(f"Length of dataset *before* dedupe: {dataset.shape[0]}")
+
+        dataset_deduped = dataset.drop_duplicates(
+            keep=False, subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
+        ).reset_index(drop=True)
+
+        dropped_rows = dataset[
+            dataset.duplicated(
+                keep=False, subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
+            )
+        ].reset_index(drop=True)
+
+        logging.info(f"Length of dataset *after* dedupe: {dataset_deduped.shape[0]}")
+
+        return dataset_deduped, dropped_rows
+
     def process(self, dataset):
         """Transforms and validates the entire Dataframe.
         Expects dataframe to contain all required columns and no columns outside of the
@@ -421,12 +444,10 @@ class DataProcessor:
             else:
                 self._process_column(df, column_name)
 
-        # Drop any rows where required columns are missing
+        # Drop any rows where required columns are missing, and record dropped rows.
         # Note: If BLANK_VALUE is changed to not be None, this will break.
         null_rows = df[df[required_fields].isnull().any(axis=1)]
         df = df.dropna(subset=required_fields).reset_index(drop=True)
-
-        # Record dropped rows.
         for ind, new_row in null_rows.iterrows():
             # Get all invalid required fields for this row.
             missing_fields = self._get_invalid_required_fields(new_row, required_fields)
@@ -442,6 +463,14 @@ class DataProcessor:
                 },
             )
             self.dropped_rows.append({ROW_KEY: row, MISSING_FIELDS_KEY: missing_fields})
+
+        # Drop duplicates, and record dropped rows.
+        df, dropped_duplicate_rows = self._drop_duplicates(df)
+        for ind, dropped_row in dropped_duplicate_rows.iterrows():
+            logging.error(
+                f"Dropping row with CaseNumber {dropped_row['CaseNumber']} due to duplicate values in the uploaded file"
+            )
+            self.dropped_rows.append({ROW_KEY: dropped_row, DUPLICATE_ROWS_KEY: True})
 
         # Process the non-required columns.
         non_required_columns = (

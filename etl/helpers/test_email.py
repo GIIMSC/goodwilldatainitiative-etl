@@ -105,9 +105,9 @@ class EmailTest(unittest.TestCase):
     def test_format_dropped_rows(self):
         test_dataframe = pd.DataFrame(
             {
-                "MilestoneFlag": ["Intake", None, "Exit"],
-                "MemberOrganization": ["aaa-111", "aaa-111", "aaa-111"],
-                "HourlyWage": ["$8.8", "$10.10", "$12.12"],
+                "MilestoneFlag": ["Intake", None, "Exit", "Intake"],
+                "MemberOrganization": ["aaa-111", "aaa-111", "aaa-111", "aaa-111"],
+                "HourlyWage": ["$8.8", "$10.10", "$12.12", "$9.19"],
             }
         )
 
@@ -124,12 +124,17 @@ class EmailTest(unittest.TestCase):
                 data_processor.ROW_KEY: test_dataframe.loc[2],
                 MISSING_INTAKE_RECORD_KEY: True,
             },
+            {
+                data_processor.ROW_KEY: test_dataframe.loc[3],
+                data_processor.DUPLICATE_ROWS_KEY: True,
+            },
         ]
 
         self.assertEqual(
             "<ul><li><i>(CaseNumber: 'None', MilestoneFlag: 'Intake')</i> Dropped because of CaseNumber (missing)</li>"
             + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'None')</i> Dropped because of MilestoneFlag (missing), CaseNumber (missing)</li>"
-            + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'Exit')</i> Dropped because the row does not have a corresponding 'Intake' record in the GII MIP database</li></ul>",
+            + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'Exit')</i> Dropped because the row does not have a corresponding 'Intake' record in the GII MIP database</li>"
+            + "<li><i>(CaseNumber: 'None', MilestoneFlag: 'Intake')</i> Dropped because the uploaded data has duplicate instances of this record. Duplicate records have the same MileStoneFlag, CaseNumber, and MemberOrganization.</li></ul>",
             email.format_dropped_rows(dropped_rows),
         )
 

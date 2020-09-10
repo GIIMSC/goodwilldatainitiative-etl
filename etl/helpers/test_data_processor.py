@@ -513,6 +513,46 @@ class TestDataProcessor(unittest.TestCase):
             ["rand", "rand", "rand", "rand", "rand"], output_df["RandomColumn"].tolist()
         )
 
+    def test_drop_duplicates(self):
+        input_dataframe = pd.DataFrame(
+            data={
+                "Date": ["2020-07-28", "2020-05-10", "2020-03-10", "2020-03-10"],
+                "CaseNumber": [
+                    "CASEID-000001",
+                    "CASEID-000003",
+                    "CASEID-xyzxyz",
+                    "CASEID-xyzxyz",
+                ],
+                "MilestoneFlag": ["SixtyDays", "SixtyDays", "Intake", "Intake"],
+                "MemberOrganization": ["abc", "abc", "abc", "abc"],
+            }
+        )
+
+        expected_deduped_dataframe = pd.DataFrame(
+            data={
+                "Date": ["2020-07-28", "2020-05-10"],
+                "CaseNumber": ["CASEID-000001", "CASEID-000003"],
+                "MilestoneFlag": ["SixtyDays", "SixtyDays"],
+                "MemberOrganization": ["abc", "abc"],
+            }
+        )
+
+        expected_dropped_records = pd.DataFrame(
+            data={
+                "Date": ["2020-03-10"],
+                "CaseNumber": ["CASEID-xyzxyz"],
+                "MilestoneFlag": ["Intake"],
+                "MemberOrganization": ["abc"],
+            }
+        )
+
+        dataset_deduped, dropped_records = self.processor._drop_duplicates(
+            input_dataframe
+        )
+
+        pd.util.testing.assert_frame_equal(expected_deduped_dataframe, dataset_deduped)
+        pd.util.testing.assert_frame_equal(expected_dropped_records, dropped_records)
+
 
 if __name__ == "__main__":
     unittest.main()

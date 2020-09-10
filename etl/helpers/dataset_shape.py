@@ -270,18 +270,6 @@ class GatewayDatasetShapeTransformer:
             self._convert_multiple_val(l) for l in dataset[column_name]
         ]
 
-    def _drop_old_duplicates(self, dataset):
-        logging.info(f"Length of dataset *before* dedupe: {dataset.shape[0]}")
-
-        dataset = dataset.sort_values(by=["Date"], ascending=False)
-        dataset = dataset.drop_duplicates(
-            subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
-        ).reset_index(drop=True)
-
-        logging.info(f"Length of dataset *after* dedupe: {dataset.shape[0]}")
-
-        return dataset
-
     def transform_dataset_shape(self, dataset: pd.DataFrame) -> pd.DataFrame:
         if dataset.empty:
             return dataset
@@ -295,7 +283,5 @@ class GatewayDatasetShapeTransformer:
 
         for column_name in multiple_val_schema_cols:
             self._reformat_multiple_val_col(dataset, column_name)
-
-        dataset = self._drop_old_duplicates(dataset)
 
         return dataset

@@ -404,9 +404,10 @@ class DataProcessor:
         dataset_deduped = dataset.drop_duplicates(
             keep=False, subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
         ).reset_index(drop=True)
+
         dropped_rows = dataset[
             dataset.duplicated(
-                subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
+                keep=False, subset=["CaseNumber", "MilestoneFlag", "MemberOrganization"]
             )
         ].reset_index(drop=True)
 

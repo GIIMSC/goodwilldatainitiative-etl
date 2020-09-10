@@ -516,15 +516,28 @@ class TestDataProcessor(unittest.TestCase):
     def test_drop_duplicates(self):
         input_dataframe = pd.DataFrame(
             data={
-                "Date": ["2020-07-28", "2020-05-10", "2020-03-10", "2020-03-10"],
+                "Date": [
+                    "2020-07-28",
+                    "2020-05-10",
+                    "2020-03-10",
+                    "2020-03-10",
+                    "2020-03-10",
+                ],
                 "CaseNumber": [
                     "CASEID-000001",
                     "CASEID-000003",
                     "CASEID-xyzxyz",
                     "CASEID-xyzxyz",
+                    "CASEID-xyzxyz",
                 ],
-                "MilestoneFlag": ["SixtyDays", "SixtyDays", "Intake", "Intake"],
-                "MemberOrganization": ["abc", "abc", "abc", "abc"],
+                "MilestoneFlag": [
+                    "SixtyDays",
+                    "SixtyDays",
+                    "Intake",
+                    "Intake",
+                    "Intake",
+                ],
+                "MemberOrganization": ["abc", "abc", "abc", "abc", "abc"],
             }
         )
 
@@ -539,10 +552,10 @@ class TestDataProcessor(unittest.TestCase):
 
         expected_dropped_records = pd.DataFrame(
             data={
-                "Date": ["2020-03-10"],
-                "CaseNumber": ["CASEID-xyzxyz"],
-                "MilestoneFlag": ["Intake"],
-                "MemberOrganization": ["abc"],
+                "Date": ["2020-03-10", "2020-03-10", "2020-03-10"],
+                "CaseNumber": ["CASEID-xyzxyz", "CASEID-xyzxyz", "CASEID-xyzxyz"],
+                "MilestoneFlag": ["Intake", "Intake", "Intake"],
+                "MemberOrganization": ["abc", "abc", "abc"],
             }
         )
 

@@ -55,7 +55,7 @@ class TestPipeline(unittest.TestCase):
         # fake_data.csv contains six rows (with two pairs of duplicates), and so, we expect only two rows in 'num_rows_to_upload'.
         assert pipeline_return_vals["email_metadata"]["num_rows_to_upload"] == 2
         assert pipeline_return_vals["email_metadata"]["dropped_values"] == []
-        assert len(pipeline_return_vals["email_metadata"]["dropped_rows"]) == 2
+        assert len(pipeline_return_vals["email_metadata"]["dropped_rows"]) == 4
         assert (
             pipeline_return_vals["email_metadata"]["dropped_rows"][0]["row"][
                 "CaseNumber"
@@ -66,12 +66,12 @@ class TestPipeline(unittest.TestCase):
             DUPLICATE_ROWS_KEY
         ]
         assert (
-            pipeline_return_vals["email_metadata"]["dropped_rows"][1]["row"][
+            pipeline_return_vals["email_metadata"]["dropped_rows"][2]["row"][
                 "CaseNumber"
             ]
             == "CASEID-000004"
         )
-        assert pipeline_return_vals["email_metadata"]["dropped_rows"][1][
+        assert pipeline_return_vals["email_metadata"]["dropped_rows"][2][
             DUPLICATE_ROWS_KEY
         ]
 

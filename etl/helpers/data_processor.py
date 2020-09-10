@@ -468,7 +468,7 @@ class DataProcessor:
         df, dropped_duplicate_rows = self._drop_duplicates(df)
         for ind, dropped_row in dropped_duplicate_rows.iterrows():
             logging.error(
-                f"Dropping row {ind} due to duplicate values in the uploaded file"
+                f"Dropping row with CaseNumber {dropped_row['CaseNumber']} due to duplicate values in the uploaded file"
             )
             self.dropped_rows.append({ROW_KEY: dropped_row, DUPLICATE_ROWS_KEY: True})
 

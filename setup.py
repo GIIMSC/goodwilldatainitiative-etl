@@ -25,7 +25,7 @@ REQUIRED_PACKAGES = [
     "tabulate==0.8.5",
     "apache-airflow>=1.10.2",
     "google-api-python-client==1.7.8",
-    "jinja2==2.10.3",
+    "jinja2==2.11.3",
     "pysftp==0.2.9",
     "requests==2.22.0",
     "us==1.0.0",
